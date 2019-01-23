@@ -15,14 +15,16 @@ display all users of  particular queue
 '''
 def index(request):
 
-    fort  = Queue.objects.filter(category__title='Fort szkieletow')
-    atena = Queue.objects.filter(category__title='Atena')
-    lobby = Queue.objects.filter(id=1)
-
+    fort  = Queue.objects.filter(category__title='Fort szkieletow')[:1]
+    #atena = Queue.objects.get(category__title='Atena')
+   # gold  = Queue.objects.get(category__title='Gold')
+  #  lobby = Queue.objects.filter(id=1)
+  
     context = {
-        'lobby':lobby,
+     #   'lobby':lobby,
         'fort':fort,
-        'atena':atena,
+     #   'atena':atena,
+      #  'gold':gold,
     }
     return render(request, 'lobby/index.html',context)
 
@@ -54,7 +56,21 @@ def dashboard(request, id):
 
     return render(request,'lobby/dashboard.html', context)       
 
-#TODO add user 
+def add_user(request,queue_id):
+    queue = Queue.objects.get(id=id)
+    user = request.user
+    all_users = queue.usrs.all
+    #check if user is in this lobby
+    if user in all_users:
+        messages.error(request,'Juz tutaj jestes')
+        return redirect('dashboard'+ queue_id)
+    else:    
+        queue.usrs.add(user)
+        return redirect('dashboard'+ queue_id)
 
-def add_user(request,queue_id,user_id):
-    pass    
+
+def remove_user(request,queue_id,user_id):
+    queue = Queue.objects.get(id=id)
+    user = User.objects.get(id=user_id)
+    queue.usrs.remove(user)
+    return redirect('dashboard'+ queue_id)
