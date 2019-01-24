@@ -1,1 +1,22 @@
-{% include '_partials/alerts.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Page Title</title>
+    <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet" />
+</head>
+
+<body bgcolor="#606060">
+
+    {% include '_partials/alerts.html' %}
+
+    <form class="box"  action="{% url 'login' %}" method="POST">
+    {% csrf_token %}
+        <h1>Login form</h1>
+        <input type="text" name="username"placeholder="username">
+        <input type="password" name="password"placeholder="password">
+        <input type="submit" value="Login">
+    </form>
+</body>
+</html>
