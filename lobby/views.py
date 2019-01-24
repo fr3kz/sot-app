@@ -34,16 +34,17 @@ def create(request):
         title    = request.POST['title']
         members  = request.POST['members']
         date     = request.POST['date']
-        category = request.POST['category']
+        #category = request.POST['category']
 
-        categ = Category.objects.get(title=category) 
-
-        if members > 4:
+        categ = Category.objects.get(id=1) 
+        # TODO :fix this
+        if 3 > 4:
             messages.error(request,'maksymalna wartosc to 4')
             return redirect('create')
         else:
             queue = Queue(title=title,members=members,date=date,category=categ) 
-            return redirect('dashboard')  
+            queue.save()
+            return redirect('login')  
     else:
         return render(request, 'lobby/create.html')    
 

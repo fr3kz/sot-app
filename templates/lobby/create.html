@@ -1,18 +1,6 @@
-{% load static%}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title>Starter Template - Materialize</title>
+{% extends 'base.html' %}
+{% block content%}
 
-  <!-- CSS  -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="{% static 'css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
-</head>
-<body>
-  
     <div class="container">
 
         <div class="row">
@@ -24,55 +12,59 @@
                     <span class="card-title center-align">Stworz poczekalnie</span>
                     
                     <div class="row">
+                        <form action="{% url 'create' %}" method="POST">
+                            {% csrf_token %}
                         <div class="input-field col s12">
-                          <input id="first_name2" type="text" class="validate create">
+                          <input id="first_name2" type="text" name="title" class="validate create">
                           <label class="active " for="first_name2">Tytuł</label>
                         </div>
                         <div class="input-field col s12"><br>
                             <label class="active" for="first_name2">First Name</label>
                             <p>
                                 <label>
-                                  <input name="group1" type="radio" />
-                                  <span>Red</span>
+                                  <input name="members" value="1" type="radio" />
+                                  <span>1</span>
                                 </label>
                               </p>
                               <p>
                                 <label>
-                                  <input name="group1" type="radio" />
-                                  <span>Yellow</span>
+                                  <input name="members" value="2"type="radio" />
+                                  <span>2</span>
                                 </label>
                               </p>
                               <p>
                                 <label>
                                   <input class="group1" name="group1" type="radio"  />
-                                  <span>Green</span>
+                                  <span>3</span>
                                 </label>
                               </p>
                               <p>
                                 <label>
                                   <input name="group1" type="radio" />
-                                  <span>Brown</span>
+                                  <span>4</span>
                                 </label>
                               </p>
-                          </div>
-
-
-
-
-                          <div class="input-field col s12">
-                            <input placeholder="2018-1-21 15:10" id="first_name2" type="text" class="validate create">
+                        </div>
+                        <div class="input-field col s12">
+                            <input placeholder="2018-1-21 15:10" id="first_name2" type="text" name="date"class="validate create">
                             <label class="active" for="first_name2">Kiedy sie rozpocznie</label>
-                          </div>
-                          <div class="input-field col s12">
-                            <input value="Alvin" id="first_name2" type="text" class="validate create">
-                            <label class="active" for="first_name2">Kategoria</label>
-                          </div>
+                        </div>
+                        <div class="input-field col s12">
+
+                          <label class="sr-only">State</label>
+                          <select name="state" class = "browser-default">
+                            <option selected="true" disabled="disabled">State (All)</option>
+                                      <option>swswwsws</option>
+                          </select><br>                          
+                        
+                        </div>
                       </div>
                     
                 </div>
 
                 <div class="card-action right-align">
-                    <a href="#">This is a link</a>
+                    <input type="submit">This is ssssa link</input>
+                  </form>
                     <a href="#">This is a link</a>
                 </div>
                 
@@ -81,12 +73,4 @@
         </div>
 
     </div>
-
-
-  <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="{% static 'js/materialize.js'%}"></script>
-  <script src="{% static  'js/init.js '%}"></script>
-
-  </body>
-</html>
+{% endblock %}
