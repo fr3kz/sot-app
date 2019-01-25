@@ -34,28 +34,33 @@ def create(request):
         title    = request.POST['title']
         members  = request.POST['members']
         date     = request.POST['date']
-        #category = request.POST['category']
+        category = request.POST['category']
 
-        categ = Category.objects.get(id=1) 
-        # TODO :fix this
-        if 3 > 4:
-            messages.error(request,'maksymalna wartosc to 4')
-            return redirect('create')
-        else:
-            queue = Queue(title=title,members=members,date=date,category=categ) 
-            queue.save()
-            return redirect('login')  
+        categ = Category.objects.get(id=category) 
+        queue = Queue(title=title,members=members,date=date,category=categ) 
+        queue.save()
+        return redirect('dashboard')  
     else:
         return render(request, 'lobby/create.html')    
 
-def dashboard(request, id):
-    queue = Queue.objects.get(id=id)
-
+def detail(request, queue_id):
+    queue = Queue.objects.get(id=queue_id)
+    
     context = {
         'queue':queue
     }
 
-    return render(request,'lobby/dashboard.html', context)       
+    return render(request,'lobby/detail.html', context) 
+
+def dashboard(request, queue_id):
+        #TODO add frontend
+    queue = Queue.objects.get(id=queue_id)
+    
+    context = {
+        'queue':queue
+    }
+
+    return render(request,'lobby/detail.html', context)      
 
 def add_user(request,queue_id):
     queue = Queue.objects.get(id=id)

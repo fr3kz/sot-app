@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+    <br>
+    <div class="container">
+
+            <div class="card dashboard">
+    
+                <div class="card-title" style="padding-top: 1px;">
+                    <h5 class="center-align">Queue dashboard:</h5>
+                </div>
+    
+                <div class="card-content">
+                    
+                    <div class="queue-title">
+    
+                     <div class="center-align"><p>Tytuł:</p><b>{{ queue.title }}</b></div>
+     
+                    </div>
+    
+                    <div class="queue-members">
+                            <div class="center-align"><p>Ilośćosob:</p><b>{{ queue.members }} /4</b></div>
+                    </div>
+    
+                    <div class="queue-date">
+                            <div class="center-align"><p>Kiedy odplywamy?</p><b>{{ queue.pretty_date}}</b></div>
+                    </div>
+    
+                    <div class="queue-userrs">
+                           <div class="center-align"><p>Uzytkownicy:</p><b>  Artur Kunicki Andrzej Kuniukci</b></div>
+                    </div>
+    
+    
+                </div>
+    
+                <div class="card-action">
+    
+                    <div class="right-align">
+                        
+                       <button class="btn waves-effect waves-light" type="submit" name="action"> Chcesz dołączyć?  
+                            <i class="material-icons right">send</i>
+                        </button>
+    
+                    </div>
+    
+                </div>
+    
+            </div>
+    
+        </div><br>
+
+    {% endblock %}

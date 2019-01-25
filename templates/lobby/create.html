@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
-{% block content%}
-
+  {% block content%}
+    <br>
     <div class="container">
 
         <div class="row">
 
-            <div class="card brown lighten-3">
+            <div class="card ">
                 
                 <div class="card-content">
                     
@@ -51,11 +51,13 @@
                         </div>
                         <div class="input-field col s12">
 
-                          <label class="sr-only">State</label>
-                          <select name="state" class = "browser-default">
-                            <option selected="true" disabled="disabled">State (All)</option>
-                                      <option>swswwsws</option>
-                          </select><br>                          
+                          <label class="sr-only">Kategoria</label><br><br>
+                          <select name="category" class = "browser-default">
+                            <option value="" disabled="disabled" selected="selected">Choose your option</option>
+                            <option value="1">Fort</option>
+                            <option value="2">Atena</option>
+                            <option value="3">Gold</option>
+                        </select>                      
                         
                         </div>
                       </div>
@@ -63,9 +65,10 @@
                 </div>
 
                 <div class="card-action right-align">
-                    <input type="submit">This is ssssa link</input>
+                  <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                    <i class="material-icons right">send</i>
+                  </button>
                   </form>
-                    <a href="#">This is a link</a>
                 </div>
                 
             </div>

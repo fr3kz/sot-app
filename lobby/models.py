@@ -17,3 +17,6 @@ class Queue(models.Model):
 
     def __str__(self):
       return self.title  
+
+    def pretty_date(self):
+        return self.date.strftime('%Y-%m-%d %H:%M')

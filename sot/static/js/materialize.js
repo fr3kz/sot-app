@@ -12274,7 +12274,7 @@ $jscomp.polyfill = function (e, r, p, m) {
       key: "_showRangeBubble",
       value: function _showRangeBubble() {
         var paddingLeft = parseInt($(this.thumb).parent().css('padding-left'));
-        var marginLeft = -7 + paddingLeft + 'px'; // TODO: fix magic number?
+        var marginLeft = -7 + paddingLeft + 'px'; // TOsDO: fix magic number?
         anim.remove(this.thumb);
         anim({
           targets: this.thumb,
