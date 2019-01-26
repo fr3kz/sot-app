@@ -20,3 +20,10 @@ class Queue(models.Model):
 
     def pretty_date(self):
         return self.date.strftime('%Y-%m-%d %H:%M')
+
+class Query(models.Model):
+    queue = models.OneToOneField(Queue, on_delete=models.DO_NOTHING)
+    profile = models.OneToOneField(Profile,on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return "Query"        

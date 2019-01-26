@@ -1,24 +1,16 @@
 from django.shortcuts import render,redirect
-from .models import (Queue,Category)
+from .models import (Queue,Category,Query)
 from accounts.models import Profile
 
 from django.contrib import messages
 # Create your views here.
-'''
-display all users of  particular queue
-{% for lobby in lobby%}
- {% for profile in lobby.usrs.all %}
-    {{ profile.name}}
- {% endfor %}
-{% endfor%}
 
-'''
 def index(request):
 
-    fort  = Queue.objects.filter(category__title='Fort szkieletow')[:1]
+    fort  = Queue.objects.order_by('-id')[:1]
     #atena = Queue.objects.get(category__title='Atena')
-   # gold  = Queue.objects.get(category__title='Gold')
-  #  lobby = Queue.objects.filter(id=1)
+    # gold  = Queue.objects.get(category__title='Gold')
+   #  lobby = Queue.objects.filter(id=1)
   
     context = {
      #   'lobby':lobby,
@@ -53,30 +45,32 @@ def detail(request, queue_id):
     return render(request,'lobby/detail.html', context) 
 
 def dashboard(request, queue_id):
-        #TODO add frontend
+
     queue = Queue.objects.get(id=queue_id)
+    queries = Query.objects.filter(queue=queue)
     
     context = {
-        'queue':queue
+        'queue':queue,
+        'queries': queries,
     }
 
-    return render(request,'lobby/detail.html', context)      
+    return render(request,'lobby/dashboard.html', context)     
 
-def add_user(request,queue_id):
-    queue = Queue.objects.get(id=id)
+def users_dashboard(request):
     user = request.user
-    all_users = queue.usrs.all
-    #check if user is in this lobby
-    if user in all_users:
-        messages.error(request,'Juz tutaj jestes')
-        return redirect('dashboard'+ queue_id)
-    else:    
+    
+    users_queue = Queue.objects.filter(usrs=user.profile)
+    #TODO: add frontend
+    context = {
+        'queue':users_queue
+    }
+
+    return render(request,'lobby/userdash.html', context)  
+#FIXME: fix that - profile <User:FR3KZ>
+def add_user(request,queue_id,profile_id):
+        queue = Queue.objects.get(id=queue_id)
+        profile = Profile.objects.get(id=profile_id)
+        user = profile.user
         queue.usrs.add(user)
         return redirect('dashboard'+ queue_id)
 
-
-def remove_user(request,queue_id,user_id):
-    queue = Queue.objects.get(id=id)
-    user = User.objects.get(id=user_id)
-    queue.usrs.remove(user)
-    return redirect('dashboard'+ queue_id)

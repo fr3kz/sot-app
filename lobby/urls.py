@@ -6,6 +6,6 @@ urlpatterns = [
     path('create/', views.create, name="create"),
     path('detail/<int:queue_id>/', views.detail, name="detail"),
     path('dashboard/<int:queue_id>/', views.dashboard, name="dashboard"),
-    path('add-user/<int:queue_id>/<int:user_id>/',views.add_user,name="adduser"),
-    path('remove-user/<int:queue_id>/<int:user_id>/',views.remove_user,name="removeuser"),
+    path('users-dashboard/', views.users_dashboard, name="user-dash"),
+    path('add-user/<int:queue_id>/<int:profile_id>/',views.add_user,name="adduser")
 ]
