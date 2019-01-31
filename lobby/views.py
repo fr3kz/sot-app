@@ -49,6 +49,9 @@ def dashboard(request, queue_id):
     queue = Queue.objects.get(id=queue_id)
     queries = Query.objects.filter(queue=queue)
     
+    #TODO display all users in particular lobby
+    #FIXME display special message if there s no query
+
     context = {
         'queue':queue,
         'queries': queries,
@@ -60,17 +63,16 @@ def users_dashboard(request):
     user = request.user
     
     users_queue = Queue.objects.filter(usrs=user.profile)
-    #TODO: add frontend
     context = {
         'queue':users_queue
     }
 
     return render(request,'lobby/userdash.html', context)  
-#FIXME: fix that - profile <User:FR3KZ>
+
 def add_user(request,queue_id,profile_id):
         queue = Queue.objects.get(id=queue_id)
         profile = Profile.objects.get(id=profile_id)
-        user = profile.user
-        queue.usrs.add(user)
-        return redirect('dashboard'+ queue_id)
+        queue.usrs.add(profile)
+        query = Query.objects.get(queue=queue,profile=profile).delete()
+        return redirect('dashboard', queue_id)
 

@@ -11,6 +11,7 @@
                     <div class="card-content white-text">
                       <span class="card-title">Oczekujacy gracze</span>
                       {% for query in queries %}
+                        {% if query  %}
                         <form method='POST' action="{% url 'adduser' query.queue.id query.profile.id %}">
                                 {% csrf_token %}
                                 <p>{{ query.profile.name }}:    
@@ -18,6 +19,13 @@
                             </p>
                             <hr>
                         </form>
+                        {% else %}
+                        
+                            <div class="center-align">
+                                <h4>Nie ma tu nic :(</h4>
+                            </div>
+
+                        {% endif %}
                       {% endfor %}
                     </div>
                   </div>
@@ -33,48 +41,86 @@
                     
                     <div class="row">
                         <div class="input-field col s12">
-                          <input id="first_name2" type="text" class="validate create" value="tytul">
+                          <input id="first_name2" type="text" class="validate create" value="{{ queue.title }}">
                           <label class="active " for="first_name2">Tytuł</label>
                         </div>
                         <div class="input-field col s12"><br>
                             <label class="active" for="first_name2">First Name</label>
                             <p>
                                 <label>
-                                  <input name="group1" type="radio" />
+                                  <input name="group1" type="radio"
+                                    {% if queue.members == 1 %}
+                                        checked
+                                    {% endif %}
+                                  />
                                   <span>1</span>
                                 </label>
                               </p>
                               <p>
                                 <label>
-                                  <input name="group1" type="radio" />
+                                  <input name="group1" type="radio" 
+                                  {% if queue.members == 2 %}
+                                  checked
+                                  {% endif %}
+                                  />
                                   <span>2</span>
                                 </label>
                               </p>
                               <p>
                                 <label>
-                                  <input class="group1" name="group1" type="radio"  />
+                                  <input class="group1" name="group1" type="radio"  
+                                  
+                                  {% if queue.members == 3 %}
+                                  checked
+                              {% endif %}
+
+                                  />
                                   <span>3</span>
                                 </label>
                               </p>
                               <p>
                                 <label>
-                                  <input name="group1" type="radio" />
+                                  <input name="group1" type="radio" 
+                                  
+                                  {% if queue.members == 4 %}
+                                  checked
+                                  {% endif %}
+
+                                  />
                                   <span>4</span>
                                 </label>
                               </p>
                         </div>
                         <div class="input-field col s12">
-                            <input placeholder="2018-1-21 15:10" id="first_name2" type="text" class="validate create">
+                            <input placeholder="2018-1-21 15:10" id="first_name2" type="text" class="validate create" value="{{ queue.pretty_date }}">
                             <label class="active" for="first_name2">Kiedy sie rozpocznie</label>
                         </div>
                         <div class="input-field col s12">
         
                             <label>Kategorie</label><br><br>
                             <select name="category" class = "browser-default">
-                                <option value="" disabled="disabled" selected="selected">Choose your option</option>
-                                <option value="1">Fort</option>
-                                <option value="2">Atena</option>
-                                <option value="3">Option 3</option>
+                                <option value="" disabled="disabled" selected="selected">Wybierz kategorie</option>
+                                <option value="1"
+
+                                {% if queue.category.title == "Fort szkieletow" %}
+                                 selected
+                                {% endif %}
+
+                                >Fort</option>
+                                <option value="2"
+                                
+                                {% if queue.category.title == "Atena" %}
+                                selected
+                               {% endif %}
+
+                                >Atena</option>
+                                <option value="3"
+                                
+                                {% if queue.category.title == "Gold" %}
+                                selected
+                               {% endif %}
+                                
+                                >Gold</option>
                             </select>                     
                         
                         </div>
@@ -88,7 +134,7 @@
     
                     <div class="right-align">
                         
-                       <button class="btn waves-effect waves-light" type="submit" name="action"> Chcesz dołączyć?  
+                       <button class="btn waves-effect waves-light" type="submit" name="action">  Aktualizuj 
                             <i class="material-icons right">send</i>
                         </button>
     
