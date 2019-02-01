@@ -10,8 +10,10 @@
                 <div class="card blue-grey darken-1" >
                     <div class="card-content white-text">
                       <span class="card-title">Oczekujacy gracze</span>
-                      {% for query in queries %}
-                        {% if query  %}
+                
+                    {% if queries%}
+                                
+                        {% for query in queries %}
                         <form method='POST' action="{% url 'adduser' query.queue.id query.profile.id %}">
                                 {% csrf_token %}
                                 <p>{{ query.profile.name }}:    
@@ -19,14 +21,14 @@
                             </p>
                             <hr>
                         </form>
-                        {% else %}
-                        
-                            <div class="center-align">
-                                <h4>Nie ma tu nic :(</h4>
-                            </div>
+                        {% endfor %}
 
-                        {% endif %}
-                      {% endfor %}
+                    {% else %}
+                        <div class="center-align">
+                            <h5><b>Nie ma tu nic :(</b></h5>
+                        </div>
+
+                    {% endif %}
                     </div>
                   </div>
             </div>
@@ -124,6 +126,30 @@
                             </select>                     
                         
                         </div>
+
+                        <div class="input-field col s12">
+        
+                            <label>Uzytkownicy</label><br><br>
+                            <select name="usrs" class = "browser-default" multiple>
+                                {% if queue.usrs.all %}
+                                    {% for profile in queue.usrs.all%}
+
+                                        <option value="{{ profile.id}}"
+                                            selected
+                                        >{{ profile.name }}</option>
+
+                                    {% endfor %} 
+                                {% else %}
+
+                                <option value="" disabled="disabled" selected="selected">Zapros kogos</option>
+
+                                {% endif %}
+                               
+                            </select>                     
+                        
+                        </div>
+
+                        
         
                       </div>
         

@@ -28,10 +28,12 @@ def create(request):
         date     = request.POST['date']
         category = request.POST['category']
 
+            #TODO add defualt user -- admin
+
         categ = Category.objects.get(id=category) 
         queue = Queue(title=title,members=members,date=date,category=categ) 
         queue.save()
-        return redirect('dashboard')  
+        return redirect('dashboard', queue.id)  
     else:
         return render(request, 'lobby/create.html')    
 
@@ -49,8 +51,7 @@ def dashboard(request, queue_id):
     queue = Queue.objects.get(id=queue_id)
     queries = Query.objects.filter(queue=queue)
     
-    #TODO display all users in particular lobby
-    #FIXME display special message if there s no query
+    #TODO update dashboard funtion
 
     context = {
         'queue':queue,
