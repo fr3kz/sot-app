@@ -27,12 +27,13 @@ def create(request):
         members  = request.POST['members']
         date     = request.POST['date']
         category = request.POST['category']
-
-            #TODO add defualt user -- admin
-
+    
+        user = request.user
+        profile = user.profile
         categ = Category.objects.get(id=category) 
-        queue = Queue(title=title,members=members,date=date,category=categ) 
+        queue = Queue(title=title,members=members,date=date,category=categ,author=user)
         queue.save()
+        queue.usrs.add(profile)
         return redirect('dashboard', queue.id)  
     else:
         return render(request, 'lobby/create.html')    
@@ -48,19 +49,26 @@ def detail(request, queue_id):
 
 def dashboard(request, queue_id):
 
+    user = request.user
+    user_id = user.id
     queue = Queue.objects.get(id=queue_id)
-    queries = Query.objects.filter(queue=queue)
-    
-    #TODO update dashboard funtion
+    author_id = queue.author.id
+    if user_id == author_id:
+        queue = Queue.objects.get(id=queue_id)
+        queries = Query.objects.filter(queue=queue)
 
-    context = {
-        'queue':queue,
-        'queries': queries,
-    }
+        context = {
+            'queue':queue,
+            'queries': queries,
+        }
 
-    return render(request,'lobby/dashboard.html', context)     
+        return render(request,'lobby/dashboard.html', context)
+    else:
+        messages.error(request,"nie masz dostępu")
+        return redirect('index')
 
 def users_dashboard(request):
+    #TODO add border between authors and participate queue.
     user = request.user
     
     users_queue = Queue.objects.filter(usrs=user.profile)
