@@ -8,15 +8,8 @@ from django.contrib import messages
 def index(request):
 
     fort  = Queue.objects.order_by('-id')[:1]
-    #atena = Queue.objects.get(category__title='Atena')
-    # gold  = Queue.objects.get(category__title='Gold')
-   #  lobby = Queue.objects.filter(id=1)
-  
     context = {
-     #   'lobby':lobby,
         'fort':fort,
-     #   'atena':atena,
-      #  'gold':gold,
     }
     return render(request, 'lobby/index.html',context)
 
@@ -68,12 +61,14 @@ def dashboard(request, queue_id):
         return redirect('index')
 
 def users_dashboard(request):
-    #TODO add border between authors and participate queue.
     user = request.user
-    
-    users_queue = Queue.objects.filter(usrs=user.profile)
+    participate_queue = Queue.objects.filter(usrs=user.profile)
+    authors_queue     = Queue.objects.filter(author=user) 
+
     context = {
-        'queue':users_queue
+        'pqueue':participate_queue,
+        'aqueue': authors_queue
+
     }
 
     return render(request,'lobby/userdash.html', context)  
@@ -85,3 +80,4 @@ def add_user(request,queue_id,profile_id):
         query = Query.objects.get(queue=queue,profile=profile).delete()
         return redirect('dashboard', queue_id)
 
+#TODO add function to add queries
