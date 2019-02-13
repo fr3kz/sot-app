@@ -80,4 +80,22 @@ def add_user(request,queue_id,profile_id):
         query = Query.objects.get(queue=queue,profile=profile).delete()
         return redirect('dashboard', queue_id)
 
-#TODO add function to add queries
+def add_query(request,queue_id):
+    
+    user = request.user
+    profile = user.profile
+    queue = Queue.objects.get(id=queue_id)
+    query = Query.objects.get(queue=queue,profile=profile)
+    
+    #check if user already attend or quered
+    if user in queue.usrs:
+        #error callback user is in the queue
+        pass
+    elif profile != query.profile:
+        #error callback user already quered
+        pass
+    else:
+        #add query
+        q = Query(profile=profile,queue=queue)
+        return redirect('dashboard' queue.id)        
+    pass
