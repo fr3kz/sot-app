@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from .models import (Queue,Category,Query)
 from accounts.models import Profile
 
@@ -7,9 +7,13 @@ from django.contrib import messages
 
 def index(request):
 
-    fort  = Queue.objects.order_by('-id')[:1]
+    nqueues  = Queue.objects.order_by('-id')[:1]
+    flobby   = Queue.objects.filter(category__title="Fort")
+    alobby    = Queue.objects.filter(category__title="Atena")
     context = {
-        'fort':fort,
+        'fort':nqueues,
+        'flobby':flobby,
+        'alobby':alobby
     }
     return render(request, 'lobby/index.html',context)
 
@@ -60,6 +64,25 @@ def dashboard(request, queue_id):
         messages.error(request,"nie masz dostępu")
         return redirect('index')
 
+def update_dash(request,queue_id):
+    title    = request.POST['title']
+    members  = request.POST['members']
+    date     = request.POST['date']
+    cateogry = request.POST['category']
+
+    queue = Queue.objects.get(id=queue_id)
+    if members:
+        queue.members = members
+    if title:
+        queue.title = title
+    if date:
+        queue.date = date
+    if cateogry:
+        cat = Category.objects.get(id=cateogry)
+        queue.category = cat
+    queue.save()
+    return redirect('dashboard', queue_id)         
+
 def users_dashboard(request):
     user = request.user
     participate_queue = Queue.objects.filter(usrs=user.profile)
@@ -85,17 +108,17 @@ def add_query(request,queue_id):
     user = request.user
     profile = user.profile
     queue = Queue.objects.get(id=queue_id)
-    query = Query.objects.get(queue=queue,profile=profile)
     
     #check if user already attend or quered
-    if user in queue.usrs:
-        #error callback user is in the queue
-        pass
-    elif profile != query.profile:
-        #error callback user already quered
-        pass
+    if Query.objects.filter(queue=queue,profile=profile).exists():
+        messages.error(request,'jestes juz tutaj quered')
+        return redirect('detail', queue.id)
+    elif user in queue.usrs:
+        messages.error(request,'jestes juz tutaj ')
+        return redirect('detail', queue.id) 
     else:
         #add query
         q = Query(profile=profile,queue=queue)
-        return redirect('dashboard' queue.id)        
+        q.save()
+        return redirect('detail', queue.id)        
     pass

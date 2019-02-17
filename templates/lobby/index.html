@@ -32,25 +32,42 @@
 
               <div class="col s12 m6" >
                 <div class="card blue-grey darken-1 z-depth-4">
-                  <div class="card-content white-text">
-                    <span class="card-title">Queue title</span>
-                    <p>Members x/4,  date ,category name, usrs name , </p>
-                  </div>
-                  <div class="card-action">
-                    <a href="#">Dolacz</a>
-                  </div>
+                    <div class="card-content white-text">
+                        <span class="card-title">{% for fort in fort %} 
+                                                
+                                  {{ fort.title}}
+                        </span>
+                        <p>Ilosc osob x/{{ fort.members}},  {{ fort.date}} ,{{ fort.category.title}}, 
+                            {% for profile in fort.usrs.all %}
+                            {{ profile.name}}
+                            {% endfor %}
+                          , </p>
+                      </div>
+                      <div class="card-action">
+                        <a href="{% url 'detail' fort.id %}">Dołącz</a>
+                        {% endfor %}
+                      </div>
                 </div>
               </div>
 
               <div class="col s12 m6">
                 <div class="card blue-grey darken-1 z-depth-4">
-                  <div class="card-content white-text">
-                    <span class="card-title">Queue title</span>
-                    <p>Members x/4,  date ,category name, usrs name , </p>
-                  </div>
-                  <div class="card-action">
-                    <a href="#">Dolacz</a>
-                  </div>
+                    <div class="card-content white-text">
+                        <span class="card-title">{% for fort in fort %} 
+                                                
+                                  {{ fort.title}}
+                        </span>
+                        <p>Ilosc osob x/{{ fort.members}},  {{ fort.date}} ,{{ fort.category.title}}, 
+                            {% for profile in fort.usrs.all %}
+                            {{ profile.name}}
+                            {% endfor %}
+                          , </p>
+                      </div>
+                      <div class="card-action">
+                        <a href="{% url 'detail' fort.id %}">Dołącz</a>
+                        {% endfor %}
+                      </div>
+                      
                 </div>
               </div>
 
@@ -71,11 +88,20 @@
              <div class="col s12 m6" style="width:200px;">
                 <div class="card blue-grey darken-1 z-depth-4">
                   <div class="card-content white-text">
-                    <span class="card-title">Queue title</span>
-                    <p>Members x/4,  date ,category name, usrs name , </p>
+                    <span class="card-title">{% for fort in flobby %} 
+                                            
+                              {{ fort.title}}
+                    </span>
+                    <p>Ilosc osob x/{{ fort.members}},  {{ fort.date}} ,{{ fort.category.title}}, 
+                        {% for profile in fort.usrs.all %}
+                        {{ profile.name}}
+                        {% endfor %}
+                      , </p>
                   </div>
                   <div class="card-action">
-                    <a href="#">Dolacz</a>
+                    <a href="{% url 'detail' fort.id %}">Dołącz</a>
+                    {% endfor %}
+                  </div>
                   </div>
                 </div>
               </div>
@@ -84,16 +110,24 @@
         <br>
        </div>
        <div class="atena">
-         <h3><span style="border-bottom: 5px solid green;">Fort lobby<span></h3>
+         <h3><span style="border-bottom: 5px solid green;">Atena lobby<span></h3>
                 <br>
                <div class="col s12 m6" style="width:200px;">
                 <div class="card blue-grey darken-1 z-depth-4">
                   <div class="card-content white-text">
-                    <span class="card-title">Queue title</span>
-                    <p>Members x/4,  date ,category name, usrs name , </p>
+                    <span class="card-title">{% for fort in alobby %} 
+                                            
+                              {{ fort.title}}
+                    </span>
+                    <p>Ilosc osob x/{{ fort.members}},  {{ fort.date}} ,{{ fort.category.title}}, 
+                        {% for profile in fort.usrs.all %}
+                        {{ profile.name}}
+                        {% endfor %}
+                      , </p>
                   </div>
                   <div class="card-action">
-                    <a href="#">Dolacz</a>
+                    <a href="{% url 'detail' fort.id %}">Dołącz</a>
+                    {% endfor %}
                   </div>
                 </div>
               </div>

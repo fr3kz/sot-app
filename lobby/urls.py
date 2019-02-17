@@ -7,5 +7,7 @@ urlpatterns = [
     path('detail/<int:queue_id>/', views.detail, name="detail"),
     path('dashboard/<int:queue_id>/', views.dashboard, name="dashboard"),
     path('users-dashboard/', views.users_dashboard, name="user-dash"),
-    path('add-user/<int:queue_id>/<int:profile_id>/',views.add_user,name="adduser")
+    path('add-user/<int:queue_id>/<int:profile_id>/',views.add_user,name="adduser"),
+    path('add-query/<int:queue_id>',views.add_query,name="addquery"),
+    path('update-dash/<int:queue_id>',views.update_dash,name="updatedash"),
 ]
