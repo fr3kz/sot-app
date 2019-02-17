@@ -1,3 +1,5 @@
 psycopg2
 Pillow
 Django
+gunicorn
+django-heroku
