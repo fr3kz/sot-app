@@ -18,7 +18,7 @@ def index(request):
     return render(request, 'lobby/index.html',context)
 
 def create(request):
-
+    #TODO chceck authors queue
     if request.method == 'POST':
         title    = request.POST['title']
         members  = request.POST['members']
@@ -83,6 +83,18 @@ def update_dash(request,queue_id):
     queue.save()
     return redirect('dashboard', queue_id)         
 
+def delete_dash(request,queue_id):
+    #TODO add delete button to dash
+    user = request.user
+    queue = Queue.objects.get(id=queue_id)
+    author_id = queue.author.id
+    if user_id == author_id:
+        queue.delete()
+        return redirect('index')
+    else:
+        messages.error(request,"nie masz dostępu")
+        return redirect('index')   
+
 def users_dashboard(request):
     user = request.user
     participate_queue = Queue.objects.filter(usrs=user.profile)
@@ -121,4 +133,5 @@ def add_query(request,queue_id):
         q = Query(profile=profile,queue=queue)
         q.save()
         return redirect('detail', queue.id)        
-    pass
+
+#TODO alerts
