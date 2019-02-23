@@ -113,7 +113,7 @@ def add_query(request,queue_id):
     if Query.objects.filter(queue=queue,profile=profile).exists():
         messages.error(request,'jestes juz tutaj quered')
         return redirect('detail', queue.id)
-    elif user in queue.usrs.all:
+    elif Queue.objects.filter(usrs=profile,id=queue_id).exists():
         messages.error(request,'jestes juz tutaj ')
         return redirect('detail', queue.id) 
     else:
