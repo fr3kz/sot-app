@@ -8,8 +8,8 @@ from django.contrib import messages
 def index(request):
 
     n1queues  = Queue.objects.order_by('-id')[:1]
-    n2queues  = Queue.objects.get(id=1)
-    n3queues  = Queue.objects.get(id=1)
+    n2queues  = Queue.objects.filter(id=1)
+    n3queues  = Queue.objects.filter(id=1)
     flobby   = Queue.objects.filter(category__title="Fort")
     alobby   = Queue.objects.filter(category__title="Atena")
     context  = {
@@ -22,14 +22,18 @@ def index(request):
     return render(request, 'lobby/index.html',context)
 
 def create(request):
-    #TODO chceck authors queue
     if request.method == 'POST':
         title    = request.POST['title']
         members  = request.POST['members']
         date     = request.POST['date']
         category = request.POST['category']
-    
+
         user = request.user
+
+        if user is None:
+            messages.error(request,"nie jestes zalogowany")
+            return redirect('create', queue.id)
+
         profile = user.profile
         categ = Category.objects.get(id=category) 
         queue = Queue(title=title,members=members,date=date,category=categ,author=user)
@@ -88,11 +92,10 @@ def update_dash(request,queue_id):
     return redirect('dashboard', queue_id)         
 
 def delete_dash(request,queue_id):
-    #TODO add delete button to dash
     user = request.user
     queue = Queue.objects.get(id=queue_id)
     author_id = queue.author.id
-    if user_id == author_id:
+    if user.id == author_id:
         queue.delete()
         return redirect('index')
     else:

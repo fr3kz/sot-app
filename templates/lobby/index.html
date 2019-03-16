@@ -82,11 +82,15 @@
   <div class='section2'>
   <div class="container">
     <div class="section">
+
       <div class="atena">
         <h3><span style="border-bottom: 5px solid green;">Atena lobby<span></h3>
                <br>
-               {% for fort in alobby %}
-              <div class="col s12" style="width:200px;">
+               
+               <div class="row">
+                  {% for fort in alobby %}
+              <div class="col s12 m3" style="width:200px;">
+                  
                <div class="card blue-grey darken-1 z-depth-4">
                  <div class="card-content white-text">
                    <span class="card-title"> 
@@ -103,7 +107,8 @@
                    <a href="{% url 'detail' fort.id %}">Dołącz</a>
                  </div>
                </div>
-             </div>
+              </div>
+            </div>
              {% endfor %}
 
        <br>
@@ -111,29 +116,32 @@
 
 
         <br>
-       </div>
+      
        <div class="atena">
          <h3><span style="border-bottom: 5px solid green;">Fort lobby<span></h3>
                 <br>
-               <div class="col s12" style="width:200px;">
-                <div class="card blue-grey darken-1 z-depth-4">
-                  <div class="card-content white-text">
-                    <span class="card-title">{% for fort in flobby %} 
-                                            
-                              {{ fort.title}}
-                    </span>
-                    <p>Ilosc osob x/{{ fort.members}},  {{ fort.date}} ,{{ fort.category.title}}, 
-                        {% for profile in fort.usrs.all %}
-                        {{ profile.name}}
-                        {% endfor %}
-                      , </p>
-                  </div>
-                  <div class="card-action" >
-                    <a href="{% url 'detail' fort.id %}">Dołącz</a>
-                    {% endfor %}
-                  </div>
+                <div class="row">
+                    {% for fort in alobby %}
+                <div class="col s12 m3" style="width:200px;">
+                 <div class="card blue-grey darken-1 z-depth-4">
+                   <div class="card-content white-text">
+                     <span class="card-title"> 
+                                             
+                               {{ fort.title}}
+                     </span>
+                     <p>Ilosc osob x/{{ fort.members}},  {{ fort.date}} ,{{ fort.category.title}}, 
+                         {% for profile in fort.usrs.all %}
+                         {{ profile.name}}
+                         {% endfor %}
+                       , </p>
+                   </div>
+                   <div class="card-action" >
+                     <a href="{% url 'detail' fort.id %}">Dołącz</a>
+                   </div>
+                 </div>
                 </div>
-              </div>
+                </div>
+               {% endfor %}
 
         <br>
        </div>

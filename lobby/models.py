@@ -15,7 +15,7 @@ class Queue(models.Model):
     date = models.DateTimeField()
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING,blank=True,null=True, related_name='cat')
     usrs = models.ManyToManyField(Profile)
-    author = models.OneToOneField(User,on_delete=models.DO_NOTHING,blank=True,null=True)
+    author = models.ForeignKey(User,on_delete=models.DO_NOTHING,blank=True,null=True)
 
     def __str__(self):
       return self.title  
