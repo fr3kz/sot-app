@@ -7,11 +7,15 @@ from django.contrib import messages
 
 def index(request):
 
-    nqueues  = Queue.objects.order_by('-id')
+    n1queues  = Queue.objects.order_by('-id')[:1]
+    n2queues  = Queue.objects.get(id=1)
+    n3queues  = Queue.objects.get(id=1)
     flobby   = Queue.objects.filter(category__title="Fort")
     alobby   = Queue.objects.filter(category__title="Atena")
     context  = {
-        'fort':nqueues,
+        'n1fort':n1queues,
+        'n2fort':n2queues,
+        'n3fort':n3queues,
         'flobby':flobby,
         'alobby':alobby
     }
