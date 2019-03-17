@@ -11,4 +11,6 @@ urlpatterns = [
     path('add-query/<int:queue_id>',views.add_query,name="addquery"),
     path('update-dash/<int:queue_id>',views.update_dash,name="updatedash"),
     path('delete-dash/<int:queue_id>',views.delete_dash,name="deletedash"),
+    path('profile/',views.profile,name="profile"),
+    path('complete/<int:queue_id>',views.complete,name="complete"),
 ]

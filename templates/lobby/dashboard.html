@@ -168,13 +168,14 @@
                       </form>
                       <div class="col s6 m6 right-align">
                         
-                          <form method="post" action="{% url 'deletedash' queue.id %}">
-                            {% csrf_token %}
-                            <button href="#"class="btn waves-effect" style="background-color: #f4511e ;" type="submit" name="action">  Usuń 
-                                  <i class="material-icons right">clear</i>
-                              </button>
-                          </form>  
-      
+                          <form method="post" action="{% url 'complete' queue.id %}">
+                              {% csrf_token %}
+                              <button href="#"class="btn waves-effect" style="background-color: #f4511e ;" type="submit" name="action">  Zakończ 
+                                    <i class="material-icons right">clear</i>
+                                </button>
+                            </form> 
+                             
+                          <br>
 
                         </div>
                       </div>

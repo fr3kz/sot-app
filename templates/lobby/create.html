@@ -12,6 +12,7 @@
                     <span class="card-title center-align">Stworz poczekalnie</span>
                     
                     <div class="row">
+                        {% include '_partials/alerts.html' %}
                         <form action="{% url 'create' %}" method="POST">
                             {% csrf_token %}
                         <div class="input-field col s12">
@@ -76,4 +77,5 @@
         </div>
 
     </div>
+
 {% endblock %}

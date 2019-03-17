@@ -2,7 +2,7 @@
 {% block content %}
     <br>
     <div class="container">
-
+            {% include '_partials/alerts.html' %}
             <div class="card dashboard">
     
                 <div class="card-title" style="padding-top: 1px;">
@@ -18,7 +18,7 @@
                     </div>
     
                     <div class="queue-members">
-                            <div class="center-align"><p>Ilośćosob:</p><b>{{ queue.members }} /4</b></div>
+                            <div class="center-align"><p>Ilośćosob:</p><b> {{ queue.usrs.all.count }}/{{ queue.members }}</b></div>
                     </div>
     
                     <div class="queue-date">

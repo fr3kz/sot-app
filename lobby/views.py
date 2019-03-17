@@ -53,7 +53,7 @@ def detail(request, queue_id):
     return render(request,'lobby/detail.html', context) 
 
 def dashboard(request, queue_id):
-
+    #TODO add reviews for users and end button
     user = request.user
     user_id = user.id
     queue = Queue.objects.get(id=queue_id)
@@ -139,6 +139,12 @@ def add_query(request,queue_id):
         #add query
         q = Query(profile=profile,queue=queue)
         q.save()
-        return redirect('detail', queue.id)        
+        return redirect('detail', queue.id)
 
-#TODO alerts
+
+def profile(request):
+    #TODO dispaly best profile in index and aside for profile detail page
+    return
+
+def complete(request):
+    return

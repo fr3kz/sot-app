@@ -4,6 +4,7 @@
           {% if user.is_authenticated %}
           <li><a href="{% url 'create'%}">Nowa poczekalnia</a></li>
           <li><a href="{% url 'user-dash' %}">Dashboard</a></li>
+          <li><a href="{% url 'profile' %}">Profil --jeszcze nie dziala--</a></li>
           {% else %}
           <li><a href="{% url 'login'%}">Signup</a></li>
           <li><a href="{% url 'register'%}">Register</a></li>
@@ -15,6 +16,7 @@
           {% if user.is_authenticated %}
           <li><a href="{% url 'create'%}">Nowa poczekalnia</a></li>
           <li><a href="{% url 'user-dash' %}">Dashboard</a></li>
+          <li><a href="{% url 'profile' %}">Profil --jeszcze nie dziala--</a></li>
           {% else %}
           <li><a href="{% url 'login'%}">Signup</a></li>
           <li><a href="{% url 'register'%}">Register</a></li>
