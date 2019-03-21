@@ -16,6 +16,7 @@ class Queue(models.Model):
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING,blank=True,null=True, related_name='cat')
     usrs = models.ManyToManyField(Profile)
     author = models.ForeignKey(User,on_delete=models.DO_NOTHING,blank=True,null=True)
+    complete = models.BooleanField(default=False)
 
     def __str__(self):
       return self.title  

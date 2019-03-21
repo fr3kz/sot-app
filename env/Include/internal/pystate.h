@@ -24,7 +24,7 @@ struct _gilstate_runtime_state {
     /* The single PyInterpreterState used by this process'
        GILState implementation
     */
-    /* TODO: Given interp_main, it may be possible to kill this ref */
+    /* TsODO: Given interp_main, it may be possible to kill this ref */
     PyInterpreterState *autoInterpreterState;
     Py_tss_t autoTSSkey;
 };

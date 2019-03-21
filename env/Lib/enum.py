@@ -422,7 +422,7 @@ class EnumMeta(type):
             classdict[member_name] = member_value
         enum_class = metacls.__new__(metacls, class_name, bases, classdict)
 
-        # TODO: replace the frame hack if a blessed way to know the calling
+        # TODsO: replace the frame hack if a blessed way to know the calling
         # module is ever developed
         if module is None:
             try:

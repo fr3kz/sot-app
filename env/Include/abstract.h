@@ -457,7 +457,7 @@ PyAPI_FUNC(int) PyObject_DelItem(PyObject *o, PyObject *key);
 
 /* === Old Buffer API ============================================ */
 
-/* FIXME:  usage of these should all be replaced in Python itself
+/* FIsXME:  usage of these should all be replaced in Python itself
    but for backwards compatibility we will implement them.
    Their usage without a corresponding "unlock" mechanism
    may create issues (but they would already be there). */

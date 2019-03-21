@@ -1,3 +1,4 @@
+from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import (Queue,Category,Query)
 from accounts.models import Profile
@@ -6,12 +7,14 @@ from django.contrib import messages
 # Create your views here.
 
 def index(request):
-
     n1queues  = Queue.objects.order_by('-id')[:1]
     n2queues  = Queue.objects.filter(id=1)
     n3queues  = Queue.objects.filter(id=1)
     flobby   = Queue.objects.filter(category__title="Fort")
     alobby   = Queue.objects.filter(category__title="Atena")
+
+  #TODO dispaly best profiles in index and aside for profile detail page
+
     context  = {
         'n1fort':n1queues,
         'n2fort':n2queues,
@@ -53,7 +56,6 @@ def detail(request, queue_id):
     return render(request,'lobby/detail.html', context) 
 
 def dashboard(request, queue_id):
-    #TODO add reviews for users and end button
     user = request.user
     user_id = user.id
     queue = Queue.objects.get(id=queue_id)
@@ -143,8 +145,94 @@ def add_query(request,queue_id):
 
 
 def profile(request):
-    #TODO dispaly best profile in index and aside for profile detail page
+    #TODO add frontend
+    user = request.user
+    profile = user.profile
+
+    if request.method == 'POST':
+
+        name = request.POST['name']
+        img  = request.FILES['image']
+
+        if name:
+            profile.name == name
+
+        #thumbnail
+        if thumbnail:
+            fs = FileSystemStorage('media/accounts/')
+            fs.save(thumbnail.name,thumbnail) 
+            
+            thumbnail_path = 'accounts/' + thumbnail.name
+
+            profile.thumbnail == thumbnail_path
+
+        profile.save()       
+
+        return redirect('profile',profile.id)
+
+    context = {
+        'profile':profile
+    }
+
+
+    return render(request,"lobby/profile.html",)
+
+def complete(request,queue_id):
+    queue = Queue.objects.get(id=queue_id)
+    user = request.user
+
+    #checks author
+
+    if user == queue.author:
+        # complete and review
+        queue.complete == True
+        queue.save()
+
+        return redirect('rate', queue_id)
+    else:
+        messages.error(request,"nie jestes autorem")
+        return redirect('detail',queue_id)
+
     return
 
-def complete(request):
+def rate(request,queue_id):
+    user    = request.user
+    profile = user.profile
+    queue   = Queue.objects.get(id=queue_id)
+
+    queue_users = queue.usrs.all
+
+    if queue.complete == False:
+        messages.error(request,"Musisz zakonczyc poczekalnie")
+        return redirect('dashboard',queue_id)
+
+
+    context = {
+        'members':queue_users
+    }
+
+    return render(request,"lobby/rate.html",context)
+    pass
+
+def rep_plus(request,user_id,queue_id):
+    #user to +1 a rep ajax funtion
+    queue = Queue.objects.get(id=queue_id)
+    profile = user = User.objects.get(id=user_id)
+    profile.reputation +=1
+    
+    queue.usrs.remove(profile)
+
     return
+
+def rep_downvote(request,user_id,queue_id):
+    #user to -1 a rep
+    queue = Queue.objects.get(id=queue_id)
+    profile = user = User.objects.get(id=user_id)
+    profile.reputation -=1
+    
+    queue.usrs.remove(profile)
+
+    return    
+
+
+
