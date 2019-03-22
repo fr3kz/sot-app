@@ -2,8 +2,12 @@ from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import (Queue,Category,Query)
 from accounts.models import Profile
-
+from rest_framework import viewsets
+from .serializers import (QueueSerializer)
 from django.contrib import messages
+from rest_framework.decorators import api_view
+from django.contrib.auth.models import User
+from django.http import HttpResponse
 # Create your views here.
 
 def index(request):
@@ -212,27 +216,29 @@ def rate(request,queue_id):
     }
 
     return render(request,"lobby/rate.html",context)
-    pass
 
 def rep_plus(request,user_id,queue_id):
     #user to +1 a rep ajax funtion
     queue = Queue.objects.get(id=queue_id)
-    profile = user = User.objects.get(id=user_id)
+    user = User.objects.get(id=user_id)
+    profile = user.profile
     profile.reputation +=1
     
     queue.usrs.remove(profile)
 
-    return
+    return HttpResponse({"message": "Hello, world!"})
 
 def rep_downvote(request,user_id,queue_id):
     #user to -1 a rep
     queue = Queue.objects.get(id=queue_id)
-    profile = user = User.objects.get(id=user_id)
+    user = User.objects.get(id=user_id)
+    profile = user.profile
     profile.reputation -=1
     
     queue.usrs.remove(profile)
 
-    return    
+    return HttpResponse({"message": "Hello, world!"}) 
 
-
-
+class IndexApi(viewsets.ModelViewSet):
+    queryset = Queue.objects.all()
+    serializer_class = QueueSerializer

@@ -4,3 +4,6 @@ Django
 gunicorn
 django-heroku
 whitenoise
+djangorestframework
+markdown
+django-filter

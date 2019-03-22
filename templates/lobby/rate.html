@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="card dashboard col m12 s12">
+
+            <div class="card-title" style="padding-top: 1px;">
+                <h5 class="center-align">Ocenianie uzytkownikow</h5>
+            </div>
+
+            <div class="card-content">
+                
+                <div class="row">
+                    <!-- for particular user-->
+                    <div class="input-field col s12">
+                        
+                        <div class="center-align">
+
+                            <div class="row">
+
+                                <div class="col m6 s12">
+                                    
+                                        Andrzej Kunicki
+
+                                </div>
+
+                                <div class="col m6 s12">
+                                    
+                                        <a class="waves-effect waves-light "><i class="material-icons ">add</i></a>
+                                        <a class="waves-effect waves-light "><i class="material-icons ">remove</i></a>
+
+                                </div>
+
+                            </div>
+                            <hr>
+                        </div>
+
+                    </div>
+                   <!--- end-->
+    
+                  </div>
+    
+
+            </div>
+
+            <div class="card-action">
+
+                <div class="right-align">
+                    
+                   <button class="btn waves-effect waves-light" style="background-color: #f4511e ;"  type="submit" name="action"> Usuń poczekalnie  
+                       
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+{% endblock %}

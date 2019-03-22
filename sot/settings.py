@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     # own apps
     'accounts.apps.AccountsConfig',
     'lobby.apps.LobbyConfig',
+
+    #3th
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
