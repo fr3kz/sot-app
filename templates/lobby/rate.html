@@ -16,6 +16,7 @@
                 
                 <div class="row">
                     <!-- for particular user-->
+                    {% for member in members %}
                     <div class="input-field col s12">
                         
                         <div class="center-align">
@@ -24,14 +25,17 @@
 
                                 <div class="col m6 s12">
                                     
-                                        Andrzej Kunicki
+                                        {{ member.name }}
 
                                 </div>
 
                                 <div class="col m6 s12">
-                                    
-                                        <a class="waves-effect waves-light "><i class="material-icons ">add</i></a>
-                                        <a class="waves-effect waves-light "><i class="material-icons ">remove</i></a>
+                                        <form method="GET" action="{% url 'repplus' user_id  queue_id %}">
+                                            <button type="submit" class="waves-effect waves-light "><i class="material-icons ">add</i></button>
+                                        </form>
+                                        <form method="GET" action="{% url 'repdown' user_id  queue_id %}">
+                                            <button type="submit" class="waves-effect waves-light "><i class="material-icons ">remove</i></button>
+                                        </form>
 
                                 </div>
 
@@ -40,6 +44,7 @@
                         </div>
 
                     </div>
+                    {% endfor %}
                    <!--- end-->
     
                   </div>

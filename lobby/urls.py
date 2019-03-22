@@ -13,7 +13,6 @@ urlpatterns = [
     path('update-dash/<int:queue_id>',views.update_dash,name="updatedash"),
     path('delete-dash/<int:queue_id>',views.delete_dash,name="deletedash"),
     path('profile/',views.profile,name="profile"),
-    path('complete/<int:queue_id>',views.complete,name="complete"),
     path('rate/<int:queue_id>',views.rate,name="rate"),
     path('rate-plus/<int:user_id>/<int:queue_id>',views.rep_plus,name="repplus"),
     path('rate-down/<int:user_id>/<int:queue_id>',views.rep_downvote,name="repdown"),

@@ -181,24 +181,6 @@ def profile(request):
 
     return render(request,"lobby/profile.html",)
 
-def complete(request,queue_id):
-    queue = Queue.objects.get(id=queue_id)
-    user = request.user
-
-    #checks author
-
-    if user == queue.author:
-        # complete and review
-        queue.complete == True
-        queue.save()
-
-        return redirect('rate', queue_id)
-    else:
-        messages.error(request,"nie jestes autorem")
-        return redirect('detail',queue_id)
-
-    return
-
 def rate(request,queue_id):
     user    = request.user
     profile = user.profile
@@ -206,13 +188,10 @@ def rate(request,queue_id):
 
     queue_users = queue.usrs.all
 
-    if queue.complete == False:
-        messages.error(request,"Musisz zakonczyc poczekalnie")
-        return redirect('dashboard',queue_id)
-
-
     context = {
-        'members':queue_users
+        'members':queue_users,
+        'queue_id':queue_id,
+        'user_id': user.id
     }
 
     return render(request,"lobby/rate.html",context)
@@ -222,8 +201,8 @@ def rep_plus(request,user_id,queue_id):
     queue = Queue.objects.get(id=queue_id)
     user = User.objects.get(id=user_id)
     profile = user.profile
-    profile.reputation +=1
-    
+    profile.reputation = profile.reputation + 1
+    profile.save()
     queue.usrs.remove(profile)
 
     return HttpResponse({"message": "Hello, world!"})
