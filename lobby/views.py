@@ -16,15 +16,15 @@ def index(request):
     n3queues  = Queue.objects.filter(id=1)
     flobby   = Queue.objects.filter(category__title="Fort")
     alobby   = Queue.objects.filter(category__title="Atena")
-
-  #TODO dispaly best profiles in index and aside for profile detail page
+    profiles = Profile.objects.order_by('-reputation')
 
     context  = {
         'n1fort':n1queues,
         'n2fort':n2queues,
         'n3fort':n3queues,
         'flobby':flobby,
-        'alobby':alobby
+        'alobby':alobby,
+        'profiles':profiles
     }
     return render(request, 'lobby/index.html',context)
 
@@ -212,12 +212,23 @@ def rep_downvote(request,user_id,queue_id):
     queue = Queue.objects.get(id=queue_id)
     user = User.objects.get(id=user_id)
     profile = user.profile
-    profile.reputation -=1
-    
+    profile.reputation = profile.reputation - 1
+    profile.save()
     queue.usrs.remove(profile)
 
     return HttpResponse({"message": "Hello, world!"}) 
 
+def profile_detail(request,profile_id):
+    profile = Profile.objects.get(id=profile_id)
+
+    context = {
+        'profile': profile
+    }
+
+    return render(request,'lobby/profiledetail.html',context)
+
 class IndexApi(viewsets.ModelViewSet):
+    
     queryset = Queue.objects.all()
+
     serializer_class = QueueSerializer
