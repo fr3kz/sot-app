@@ -16,14 +16,14 @@
                         <form action="{% url 'create' %}" method="POST">
                             {% csrf_token %}
                         <div class="input-field col s12">
-                          <input id="first_name2" type="text" name="title" class="validate create">
+                          <input id="first_name2" type="text" name="title" class="validate create" required>
                           <label class="active " for="first_name2">Tytuł</label>
                         </div>
                         <div class="input-field col s12"><br>
-                            <label class="active" for="first_name2">Ile uzytkownikow</label>
+                            <label class="active" for="first_name2" >Ile uzytkownikow</label>
                             <p>
                                 <label>
-                                  <input name="members" value="1" type="radio" />
+                                  <input name="members" value="1" type="radio" checked="checked"/>
                                   <span>1</span>
                                 </label>
                               </p>
@@ -47,14 +47,14 @@
                               </p>
                         </div>
                         <div class="input-field col s12">
-                            <input placeholder="2018-1-21 15:10" id="first_name2" type="text" name="date"class="validate create">
+                            <input placeholder="2018-1-21 15:10" id="first_name2" type="text" name="date"class="validate create" required>
                             <label class="active" for="first_name2">Kiedy sie rozpocznie</label>
                         </div>
                         <div class="input-field col s12">
 
                           <label class="sr-only">Kategoria</label><br><br>
-                          <select name="category" class = "browser-default">
-                            <option value="" disabled="disabled" selected="selected">Choose your option</option>
+                          <select name="category" class = "browser-default" required>
+                            <option value="" disabled="disabled" selected="selected">Wybierz opcję</option>
                             <option value="1">Fort</option>
                             <option value="2">Atena</option>
                             <option value="3">Gold</option>

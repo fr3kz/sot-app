@@ -34,7 +34,7 @@ def create(request):
         members  = request.POST['members']
         date     = request.POST['date']
         category = request.POST['category']
-
+        
         user = request.user
 
         if user is None:
