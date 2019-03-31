@@ -2,18 +2,20 @@ from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import (Queue,Category,Query)
 from accounts.models import Profile
-from rest_framework import viewsets
-from .serializers import (QueueSerializer)
 from django.contrib import messages
-from rest_framework.decorators import api_view
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 # Create your views here.
 
 def index(request):
+    #FOR PRODUCTION ONLY
     n1queues  = Queue.objects.order_by('-id')[:1]
-    n2queues  = Queue.objects.filter(id=1)
-    n3queues  = Queue.objects.filter(id=1)
+    n2queues  = Queue.objects.order_by('-id')[:1]
+    n3queues  = Queue.objects.order_by('-id')[:1]
+    #n1_id = n1queues.id + 1
+    #n2queues  = Queue.objects.filter(id=n1_id)
+    #n2_id = n2queues.id + 1
+    #n3queues  = Queue.objects.filter(id=n2_id)
     flobby   = Queue.objects.filter(category__title="Fort")
     alobby   = Queue.objects.filter(category__title="Atena")
     profiles = Profile.objects.order_by('-reputation')
@@ -147,7 +149,6 @@ def add_query(request,queue_id):
         q.save()
         return redirect('detail', queue.id)
 
-
 def profile(request):
     #TODO add frontend
     user = request.user
@@ -205,7 +206,7 @@ def rep_plus(request,user_id,queue_id):
     profile.save()
     queue.usrs.remove(profile)
 
-    return HttpResponse({"message": "Hello, world!"})
+    return redirect('rate',queue_id)
 
 def rep_downvote(request,user_id,queue_id):
     #user to -1 a rep
@@ -216,7 +217,7 @@ def rep_downvote(request,user_id,queue_id):
     profile.save()
     queue.usrs.remove(profile)
 
-    return HttpResponse({"message": "Hello, world!"}) 
+    return redirect('rate',queue_id)
 
 def profile_detail(request,profile_id):
     profile = Profile.objects.get(id=profile_id)
@@ -226,9 +227,3 @@ def profile_detail(request,profile_id):
     }
 
     return render(request,'lobby/profiledetail.html',context)
-
-class IndexApi(viewsets.ModelViewSet):
-    
-    queryset = Queue.objects.all()
-
-    serializer_class = QueueSerializer

@@ -14,8 +14,8 @@
                                             
                               {{ fort.title}}
                     </span>
-                    <p>Ilosc osob x/{{ fort.members}},  {{ fort.date}} ,{{ fort.category.title}}, 
-                        {% for profile in fort.usrs.all %}
+                    <p>Ilosc osob {{ fort.usrs.all.count }}/{{ fort.members}},  Kiedy odplywamy? {{ fort.pretty_date}} , Co robimy? {{ fort.category.title}}, 
+                        Gracze: {% for profile in fort.usrs.all %}
                         {{ profile.name}}
                         {% endfor %}
                       , </p>
@@ -37,8 +37,8 @@
                                                 
                                   {{ fort.title}}
                         </span>
-                        <p>Ilosc osob x/{{ fort.members}},  {{ fort.date}} ,{{ fort.category.title}}, 
-                            {% for profile in fort.usrs.all %}
+                        <p>Ilosc osob {{ fort.usrs.all.count }}/{{ fort.members}},  Kiedy odplywamy? {{ fort.pretty_date}} , Co robimy? {{ fort.category.title}}, 
+                            Gracze: {% for profile in fort.usrs.all %}
                             {{ profile.name}}
                             {% endfor %}
                           , </p>
@@ -57,8 +57,8 @@
                                                 
                                   {{ fort.title}}
                         </span>
-                        <p>Ilosc osob x/{{ fort.members}},  {{ fort.date}} ,{{ fort.category.title}}, 
-                            {% for profile in fort.usrs.all %}
+                        <p>Ilosc osob {{ fort.usrs.all.count }}/{{ fort.members}},  Kiedy odplywamy? {{ fort.pretty_date}} , Co robimy? {{ fort.category.title}}, 
+                            Gracze: {% for profile in fort.usrs.all %}
                             {{ profile.name}}
                             {% endfor %}
                           , </p>
@@ -99,8 +99,8 @@
                                                       
                                         {{ fort.title}}
                               </span>
-                              <p>Ilosc osob x/{{ fort.members}},  {{ fort.date}} ,{{ fort.category.title}}, 
-                                  {% for profile in fort.usrs.all %}
+                              <p>Ilosc osob {{ fort.usrs.all.count }}/{{ fort.members}},  Kiedy odplywamy? {{ fort.pretty_date}} , Co robimy? {{ fort.category.title}}, 
+                                  Gracze: {% for profile in fort.usrs.all %}
                                   {{ profile.name}}
                                   {% endfor %}
                                 , </p>
@@ -135,8 +135,8 @@
                                                       
                                         {{ fort.title}}
                               </span>
-                              <p>Ilosc osob x/{{ fort.members}},  {{ fort.date}} ,{{ fort.category.title}}, 
-                                  {% for profile in fort.usrs.all %}
+                              <p>Ilosc osob {{ fort.usrs.all.count }}/{{ fort.members}},  Kiedy odplywamy? {{ fort.pretty_date}} , Co robimy? {{ fort.category.title}}, 
+                                  Gracze: {% for profile in fort.usrs.all %}
                                   {{ profile.name}}
                                   {% endfor %}
                                 , </p>

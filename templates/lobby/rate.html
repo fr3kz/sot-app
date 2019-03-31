@@ -33,10 +33,10 @@
                                         <form method="GET" action="{% url 'repplus' user_id  queue_id %}">
                                             <button type="submit" class="waves-effect waves-light "><i class="material-icons ">add</i></button>
                                         </form>
+                                    
                                         <form method="GET" action="{% url 'repdown' user_id  queue_id %}">
-                                            <button type="submit" class="waves-effect waves-light "><i class="material-icons ">remove</i></button>
-                                        </form>
-
+                                            <button type="submit" ><i class="material-icons ">remove</i></button>
+                                        </form>   
                                 </div>
 
                             </div>
@@ -55,11 +55,12 @@
             <div class="card-action">
 
                 <div class="right-align">
-                    
-                   <button class="btn waves-effect waves-light" style="background-color: #f4511e ;"  type="submit" name="action"> Usuń poczekalnie  
-                       
+                   <form method="GET" action="{% url 'deletedash' queue_id %}">
+
+                    <button class="btn waves-effect waves-light" style="background-color: #f4511e ;"  type="submit" name="action"> Usuń poczekalnie  
                     </button>
 
+                   </form>
                 </div>
 
             </div>
