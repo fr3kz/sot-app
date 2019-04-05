@@ -150,7 +150,6 @@ def add_query(request,queue_id):
         return redirect('detail', queue.id)
 
 def profile(request):
-    #TODO add frontend
     user = request.user
     profile = user.profile
 
@@ -180,7 +179,7 @@ def profile(request):
     }
 
 
-    return render(request,"lobby/profile.html",)
+    return render(request,"lobby/profile.html",context)
 
 def rate(request,queue_id):
     user    = request.user
@@ -205,7 +204,6 @@ def rep_plus(request,user_id,queue_id):
     profile.reputation = profile.reputation + 1
     profile.save()
     queue.usrs.remove(profile)
-
     return redirect('rate',queue_id)
 
 def rep_downvote(request,user_id,queue_id):

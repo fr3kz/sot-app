@@ -4,6 +4,7 @@ from .serializers import (QueueSerializer,CategorySerializer,UserSerializer)
 
 from .models import (Queue,Category,Query)
 from django.contrib.auth.models import User
+
 class IndexApi(viewsets.ModelViewSet):
     
     queryset = Queue.objects.all()

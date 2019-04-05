@@ -28,10 +28,6 @@
 .post{
   background-color: #eeeeee;
 }
-html{
-  position: relative;
-  min-height: 100%;
-}
 /*=========================================
 ============= section 1 ===================
 ===========================================
@@ -234,7 +230,7 @@ body{
 
 .precard{
   padding:10px;
-  background-color: #e3f2fd;
+  background-color: #d2dae2;
 }
 
 
