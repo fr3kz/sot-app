@@ -179,7 +179,6 @@ def profile(request):
         'profile':profile
     }
 
-
     return render(request,"lobby/profile.html",)
 
 def rate(request,queue_id):
