@@ -150,36 +150,36 @@ def add_query(request,queue_id):
         return redirect('detail', queue.id)
 
 def profile(request):
-    #TODO add frontend
     user = request.user
     profile = user.profile
 
     if request.method == 'POST':
 
-        name = request.POST['name']
-        img  = request.FILES['image']
+        username = request.POST['username']
 
-        if name:
-            profile.name == name
+        if username:
+            profile.username = username
 
         #thumbnail
-        if thumbnail:
-            fs = FileSystemStorage('media/accounts/')
+        if request.FILES:
+            thumbnail  = request.FILES['image']
+            fs = FileSystemStorage('media/accounts')
             fs.save(thumbnail.name,thumbnail) 
             
             thumbnail_path = 'accounts/' + thumbnail.name
 
-            profile.thumbnail == thumbnail_path
+            profile.thumbnail = thumbnail_path
 
-        profile.save()       
+        profile.save()
+       
 
-        return redirect('profile',profile.id)
+        return redirect('index')
 
     context = {
         'profile':profile
     }
+    return render(request,"lobby/profile.html",context)
 
-    return render(request,"lobby/profile.html",)
 
 def rate(request,queue_id):
     user    = request.user
@@ -204,7 +204,6 @@ def rep_plus(request,user_id,queue_id):
     profile.reputation = profile.reputation + 1
     profile.save()
     queue.usrs.remove(profile)
-
     return redirect('rate',queue_id)
 
 def rep_downvote(request,user_id,queue_id):
@@ -219,6 +218,7 @@ def rep_downvote(request,user_id,queue_id):
     return redirect('rate',queue_id)
 
 def profile_detail(request,profile_id):
+    
     profile = Profile.objects.get(id=profile_id)
 
     context = {

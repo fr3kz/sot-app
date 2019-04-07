@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+    {% block content %}
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col m5 s12">
+
+                    <!-- FUTURE: ZAPROSZENIA-->
+
+                    <div class="card blue-grey darken-1" >
+                        <div class="card-content white-text">
+                          <span class="card-title">Zaproszenia</span>
+                                <!-- wyswietl zaproszenia-->
+                        </div>
+                      </div>
+
+                    <!-- end zaproszenia-->
+
+                </div>
+
+
+                <div class="col m7 s12">
+
+                    <!-- fields for edit name and upload image -->
+                    
+                    <div class="card ">
+                
+                        <div class="card-content">
+                            
+                            <span class="card-title center-align">Edytuj Profil</span>
+                            
+                            <div class="row">
+                                <form action="{% url 'profile' %}" method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                <div class="input-field col s12">
+                                  <input id="first_name2" type="text" name="username" class=" create" required value="{{ profile.username }}">
+                                  <label class="active " for="first_name2">Nick</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <br>
+                                    <input id="first_name2" type="file" name="image" value="{{ profile.thumbnail.url}}">
+                                    <label class="active" for="first_name2">Zmien zdjęcie</label>
+                                </div>
+                            </div>
+                            
+                        </div>
+        
+                        <div class="card-action right-align">
+                          <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                            <i class="material-icons right">send</i>
+                          </button>
+                          </form>
+                        </div>
+                        
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                    
+
+            </div>
+
+        </div>
+
+    {% endblock %}
