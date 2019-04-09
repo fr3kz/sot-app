@@ -1,10 +1,9 @@
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import (Queue,Category,Query)
-from accounts.models import Profile
+from .models import (Queue,Category,Query,Invitation)
+from accounts.models import (Profile,Friendship)
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.http import HttpResponse
 # Create your views here.
 
 def index(request):
@@ -220,9 +219,72 @@ def rep_downvote(request,user_id,queue_id):
 def profile_detail(request,profile_id):
     
     profile = Profile.objects.get(id=profile_id)
+    usr     = request.user
+
 
     context = {
-        'profile': profile
+        'profile': profile,
+        'user': profile.user,
+        'prof': usr.profile
     }
 
     return render(request,'lobby/profiledetail.html',context)
+
+
+def send_invite(request,invitator_id,invited_id):
+
+    invitator = User.objects.get(id=invitator_id)
+    invitator_usr = invitator.profile
+    inv_id          = invitator_usr.id
+
+    invited   = Profile.objects.get(id=invited_id)
+
+    #check if user invite hisself 
+    if invitator_usr.id == invited.id:
+        
+        messages.error(request,"Nie mozesz zaprosić samego siebie.")
+        return redirect('profile',invited_id)
+
+    #TODO:check if user already send ivite    
+
+    invitation = Invitation(invited=invited)
+    invitation.save()
+    invitation.invitator.add(invitator)
+    invitation.save()
+
+    return redirect('profile')
+
+def accept_invite(request,invitator_id,invited_id):
+
+    invitator     = User.objects.get(id=invitator_id)
+
+    invited       = Profile.objects.get(id=invited_id)
+
+    invite        = Invitation.objects.get(invitator=invitator,invited=invited)   
+
+    #ccheck if user has any firendship
+    if Friendship.objects.filter(profile=invited).exists():
+
+        #add to existing
+        friendship = Friendship.objects.get(profile=invited)
+        firendship.friends.add(invitator)
+        friendship.save()
+
+    else:
+        f = Friendship(profile=invited,friends=invitator)
+        f.save()    
+
+    invite.delete()
+
+    return redirect('profile')
+
+def reject_invite(request,invitator_id,invited_id):
+   
+    invitator     = User.objects.get(id=invitator_id)
+
+    invited       = Profile.objects.get(id=invited_id)
+
+    invite        = Invitation.objects.get(invitator=invitator,invited=invited)   
+    invite.delete()
+
+    return redirect('profile')           

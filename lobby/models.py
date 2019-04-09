@@ -29,4 +29,11 @@ class Query(models.Model):
     profile = models.OneToOneField(Profile,on_delete=models.DO_NOTHING)
 
     def __str__(self):
-        return "Query"        
+        return "Query"
+
+class Invitation(models.Model):
+    invitator = models.ManyToManyField(User)
+    invited   = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return "Invite"            

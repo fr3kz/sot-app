@@ -1,5 +1,5 @@
 from django.contrib import admin
-from lobby.models import (Queue,Category,Query)
+from lobby.models import (Queue,Category,Query,Invitation)
 
 class QueueAdmin(admin.ModelAdmin):
     list_display = ('id','title','date','members')
@@ -12,4 +12,5 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(Queue,QueueAdmin)
 admin.site.register(Category,CategoryAdmin)
 admin.site.register(Query)
+admin.site.register(Invitation)
 

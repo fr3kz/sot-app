@@ -65,10 +65,13 @@
                                         <div class="card-action">
                                             
                                             <div class="right-align">
-                                                    
-                                                    <button class="btn waves-effect waves-light" type="submit" name="action">Zaproś
+                                                    <form method="GET" action="{% url 'sendinvite' user.id  prof.id %}" >
+                                                        
+                                                        <button class="btn waves-effect waves-light" type="submit" name="action">Zaproś
                                                             <i class="material-icons right">send</i>
-                                                    </button>
+                                                        </button>
+
+                                                    </form>
 
                                             </div>
 

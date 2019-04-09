@@ -16,4 +16,7 @@ urlpatterns = [
     path('rate/<int:queue_id>',views.rate,name="rate"),
     path('rate-plus/<int:user_id>/<int:queue_id>',views.rep_plus,name="repplus"),
     path('rate-down/<int:user_id>/<int:queue_id>',views.rep_downvote,name="repdown"),
+    path('send-invite/<int:invitator_id>/<int:invited_id>',views.send_invite,name="sendinvite"),
+    path('accept-invite/<int:invitator_id>/<int:invited_id>',views.accept_invite,name="acceptinvite"),
+    path('reject-invite/<int:invitator_id>/<int:invited_id>',views.reject_invite,name="rejectinvite"),
 ]
