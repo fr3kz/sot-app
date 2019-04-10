@@ -152,6 +152,9 @@ def profile(request):
     user = request.user
     profile = user.profile
 
+    #invitations
+    user_invites = Invitation.objects.filter(invited=profile)
+
     if request.method == 'POST':
 
         username = request.POST['username']
@@ -172,13 +175,15 @@ def profile(request):
         profile.save()
        
 
-        return redirect('index')
+        return redirect('profile')
 
     context = {
-        'profile':profile
-    }
-    return render(request,"lobby/profile.html",context)
+        'profile':profile,
+        'invitations':user_invites,
 
+    }
+
+    return render(request,"lobby/profile.html",context)
 
 def rate(request,queue_id):
     user    = request.user
@@ -230,7 +235,6 @@ def profile_detail(request,profile_id):
 
     return render(request,'lobby/profiledetail.html',context)
 
-
 def send_invite(request,invitator_id,invited_id):
 
     invitator = User.objects.get(id=invitator_id)
@@ -266,13 +270,16 @@ def accept_invite(request,invitator_id,invited_id):
     if Friendship.objects.filter(profile=invited).exists():
 
         #add to existing
-        friendship = Friendship.objects.get(profile=invited)
-        firendship.friends.add(invitator)
-        friendship.save()
+        fren = Friendship.objects.get(profile=invited)
+        fren.friends.add(invitator)
+        fren.save()
 
     else:
-        f = Friendship(profile=invited,friends=invitator)
-        f.save()    
+        f = Friendship(profile=invited)
+        f.save()
+        f.friends.add(invitator)
+        f.save()
+
 
     invite.delete()
 
@@ -287,4 +294,9 @@ def reject_invite(request,invitator_id,invited_id):
     invite        = Invitation.objects.get(invitator=invitator,invited=invited)   
     invite.delete()
 
-    return redirect('profile')           
+    return redirect('profile')
+
+#TODO add friends card 
+# TODO function to deleting friends:
+# TODO add friends to queue 
+# TODO add batter way to add user to yours lobby
