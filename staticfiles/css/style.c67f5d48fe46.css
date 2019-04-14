@@ -1,0 +1,254 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+ .icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+	font-size: inherit;
+}
+*{
+  margin:0;
+  padding:0;
+}
+.underline{
+  border-bottom: 3px solid red;
+  display: inline;
+}
+.underline-this {
+
+  text-decoration: underline;
+  text-decoration-color: green;
+}
+.post{
+  background-color: #eeeeee;
+}
+html{
+  position: relative;
+  min-height: 100%;
+}
+/*=========================================
+============= section 1 ===================
+===========================================
+*/
+.section1{
+  background-color: #606060 ;
+  width:100%;
+  height: 100%;
+}
+
+/*=========================================
+============= section 2 ===================
+===========================================
+*/
+.section2{
+  background-color: #eeeeee;
+  width:100%;
+  height: 100%;
+}
+
+.box{
+  width:300px;
+  padding: 40px;
+  background-color: #d2dae2;
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+
+}
+.box input[type="text"],.box input[type="password"]{
+  border: 0;
+  border-radius: 24px;
+  border: 2px solid #485460;
+  background: none;
+  display: block;
+  margin: 25px auto;
+  padding: 14px 18px;
+  text-align: center;
+  outline: none;
+  width: 200px;
+  transition: 1s;
+}
+.box input[type="text"]:focus,.box input[type="password"]:focus{
+  width: 260px;
+  border-color: #2ecc71;
+}
+.box input[type="submit"]{
+  border: 0;
+  border-radius: 24px;
+  border: 2px solid #485460;
+  background: none;
+  padding:14px 40px;
+  transition: 1s;
+  outline: none;
+}
+.box h1{
+  color:white;
+  text-transform: uppercase;
+}
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+ .icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+	font-size: inherit;
+}
+*{
+  margin:0;
+  padding:0;
+}
+.underline{
+  border-bottom: 3px solid red;
+  display: inline;
+}
+.underline-this {
+
+  text-decoration: underline;
+  text-decoration-color: green;
+}
+.post{
+  background-color: #eeeeee;
+}
+/*=========================================
+============= section 1 ===================
+===========================================
+*/
+.section1{
+  background-color: #606060 ;
+  width:100%;
+  height: 100%;
+}
+
+/*=========================================
+============= section 2 ===================
+===========================================
+*/
+.section2{
+  background-color: #eeeeee  ;
+  width:100%;
+  height: 100%;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #485460;
+}
+.box{
+  width:300px;
+  padding: 40px;
+  background-color: #d2dae2;
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+
+}
+.box input[type="text"],.box input[type="password"]{
+  border: 0;
+  border-radius: 24px;
+  border: 2px solid #485460;
+  background: none;
+  display: block;
+  margin: 25px auto;
+  padding: 14px 18px;
+  text-align: center;
+  outline: none;
+  width: 200px;
+  transition: 1s;
+}
+.box input[type="text"]:focus,.box input[type="password"]:focus{
+  width: 260px;
+  border-color: #2ecc71;
+}
+.box input[type="submit"]{
+  border: 0;
+  border-radius: 24px;
+  border: 2px solid #485460;
+  background: none;
+  padding:14px 40px;
+  transition: 1s;
+  outline: none;
+}
+.box h1{
+  color:white;
+  text-transform: uppercase;
+}
+
+
+/*=========================================
+=============   create  ===================
+===========================================
+*/
+.create-form input[type="text"]{
+  background: none;
+  display: block;
+  border-radius: 20px;
+  margin: 25px auto;
+  padding: 14px 18px;
+  text-align: center;
+  width: 100px;
+  transition: 1s;
+}
+
+.create{
+  border: #2ecc71 2px solid;
+  border-radius: 20px;
+}
+.dashboard{
+  background-color: #e0f7fa;
+}
+
+
+/*=========================================
+=============   section3  ===================
+===========================================
+*/
+
+.section3{
+  background-color: #485460              ;
+  width:100%;
+  height: 100%;
+}
+
+/*=========================================
+=============   profile  ===================
+===========================================
+*/
+
+.precard{
+  padding:10px;
+  background-color: #e3f2fd;
+}
+
+
+/*=========================================
+=============   mobile view  ===================
+===========================================
+*/
+@media only screen and (max-width: 800px) {
+ .formobile{
+  width: 200px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+ }
+
+}
+

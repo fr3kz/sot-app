@@ -92,16 +92,52 @@
                         
                         <div class="card-content ">
                             <span class="card-title center-align">Znajomi</span>
-                            <p>
 
-                                {% for friend in profile.friendship.friends.all %}
+                                    {% for friend in profile.friendship.friends.all %}
 
-                                    <!-- display card for user-->
-                                    {{ friend.profile.username }}
+                                                <!-- display card for user   {{ friend.profile.username }}-->
 
-                                {% endfor %}
-                            </p>
-                          </div>
+                                                {% if friend %}
+
+                                                        <table>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Username </th>
+                                                                    <th>Thumbnail</th>
+                                                                    <th>Rep</th>
+                                                                    <th>Usuń</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>{{ friend.profile.username }}</td>
+                                                                    <td><img src="{{ friend.profile.thumbnail.url }}" style="width: 50px;height: 50px;"></td>
+                                                                    <td>{{ friend.profile.reputation }}</td>
+                                                                    <td> 
+                                                                        <a class="btn-floating btn-small waves-effect waves-light red" href="/delete-friend/{{ friend.id }}"><i class="material-icons">remove</i></a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                {% else %}
+
+                                                    <div class=" center-align">
+
+                                                            Nie masz żadnych znajomych<br>
+                        
+                                                        </div>
+
+                                                {% endif %}    
+                                        
+
+
+                                    {% endfor %}<br>
+            
+            
+                       </div>
+                    </div>
 
                     </div>  
 

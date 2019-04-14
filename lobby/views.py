@@ -296,7 +296,20 @@ def reject_invite(request,invitator_id,invited_id):
 
     return redirect('profile')
 
-#TODO add friends card 
-# TODO function to deleting friends:
-# TODO add friends to queue 
-# TODO add batter way to add user to yours lobby
+def delete_friend(request,friend_id):
+    
+    usr = request.user
+    profile = usr.profile
+
+    fs = Friendship.objects.get(profile=profile)
+
+    for friend in fs.friends.all():
+
+        if friend.id == friend_id:
+            fs.friends.remove(friend)
+
+    pass        
+
+    return redirect('profile')
+
+#TODO: add pop up card on button click in dash, 2 options invite friends(create inv-to-lobby) second lobby copy link

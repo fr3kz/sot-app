@@ -126,7 +126,7 @@
 
                         <div class="input-field col s12">
         
-                            <label>Uzytkownicy</label><br><br>
+                            <label>Gracze</label><br><br>
                             <select name="usrs" class = "browser-default" multiple>
                                 {% if queue.usrs.all %}
                                     {% for profile in queue.usrs.all%}
@@ -141,9 +141,14 @@
                                 <option value="" disabled="disabled" selected="selected">Zapros kogos</option>
 
                                 {% endif %}
-                               
-                            </select>                     
-                        
+
+                            </select>                    
+                            <div class="fixed-action-btn">
+                                <a class="btn-floating btn-large waves-effect waves-light red click-to-toggle" ><i class="material-icons">add</i></a> 
+                                <ul>
+                                  <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+                                </ul>
+                              </div>
                         </div>
 
                         
