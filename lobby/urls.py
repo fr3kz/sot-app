@@ -20,4 +20,6 @@ urlpatterns = [
     path('accept-invite/<int:invitator_id>/<int:invited_id>',views.accept_invite,name="acceptinvite"),
     path('reject-invite/<int:invitator_id>/<int:invited_id>',views.reject_invite,name="rejectinvite"),
     path('delete-friend/<int:friend_id>',views.delete_friend,name="deletefriend"),
+    path('options/<int:queue_id>',views.show_options,name="options"),
+    path('add-user-invite/<int:queue_id>/<int:profile_id>/', views.add_userinvite,name="adduserinvite"),
 ]

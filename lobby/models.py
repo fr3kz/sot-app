@@ -36,4 +36,11 @@ class Invitation(models.Model):
     invited   = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)
 
     def __str__(self):
-        return "Invite"            
+        return "Invite"
+
+class UserInvite(models.Model):
+    queue = models.ManyToManyField(Queue)
+    user = models.ManyToManyField(User)
+
+    def __str__(self):
+        return "UserInvite"            

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+    {% block content %}<br>
+
+        <div class="row">
+
+            <div class="offset-m1 col m10 offset-m1 s12">
+
+                    <div class="card horizontal">
+
+                            <div class="card-stacked"><br>
+
+                                <div class="card-title center-align">
+                                    Jak chcesz zaprosić osoby do swojej poczeklani?
+                                </div>
+
+                              <div class="card-content">
+
+                                <!-- disokay friends and add them to queue-->
+                                <b>1) Opcja - Znajomi</b><br><br>
+                                <div class="friends">
+
+                                    {% for friend in friendship.friends.all%}
+
+                                                <!-- display card for user   {{ friend.profile.username }}-->
+
+                                                {% if friend %}
+
+                                                        <table>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Username </th>
+                                                                    <th>Thumbnail</th>
+                                                                    <th>Rep</th>
+                                                                    <th>Zaproś</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td><a href="/profile/{{ friend.profile.id }}"> {{ friend.profile.username }} </a></td>
+                                                                    <td><img src="{{ friend.profile.thumbnail.url }}" style="width: 50px;height: 50px;"></td>
+                                                                    <td>{{ friend.profile.reputation }}</td>
+                                                                    <td> 
+                                                                        <a class="btn-floating btn-small waves-effect waves-light red" href=""><i class="material-icons">add</i></a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                {% else %}
+
+                                                    <div class=" center-align">
+
+                                                            Nie masz żadnych znajomych<br>
+                        
+                                                        </div>
+
+                                                {% endif %}    
+                                        
+
+
+                                    {% endfor %}<br>
+
+
+                                </div><br>
+
+                                <!-- display invite link for others-->
+                                <b>2) Opcja - Link</b>
+                                <div class="link"><br>
+                                   
+                                        <div class="input-field col s6">
+
+                                                <input id="icon_telephone" type="tel" class="validate" value="www.sotapp.pl/detail/{{ queue.id }}" disabled>
+                                                <label for="icon_telephone">Link zapraszający do poczekalni</label>
+
+                                        </div>
+                                    
+                                </div>
+
+                              </div>
+
+                        </div>
+
+                    </div>
+            </div>
+
+        </div>
+
+    {% endblock %}

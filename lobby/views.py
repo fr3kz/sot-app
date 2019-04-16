@@ -1,6 +1,6 @@
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import (Queue,Category,Query,Invitation)
+from .models import (Queue,Category,Query,Invitation,UserInvite)
 from accounts.models import (Profile,Friendship)
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -312,4 +312,49 @@ def delete_friend(request,friend_id):
 
     return redirect('profile')
 
-#TODO: add pop up card on button click in dash, 2 options invite friends(create inv-to-lobby) second lobby copy link
+def show_options(request,queue_id):
+
+    queue = Queue.objects.get(id=queue_id)
+    
+    user = request.user
+    profile = user.profile
+
+    friendship = Friendship.objects.get(profile=profile)
+
+    context = {
+        'queue':queue,
+        'friendship':friendship
+    }
+
+    return render(request, "lobby/options.html",context)
+
+def add_userinvite(request,queue_id,profile_id):
+
+    queue = Queue.objects.get(id=queue_id)
+
+    profile = Profile.objects.get(id=profile_id)
+
+    #add usee invitation
+    userinvite = UserInvite(queue=queue,profile=profile)
+    userinvite.save()
+
+    #TODO add positive messages
+    return redirect('profile', profile.id)
+
+def show_userinvite(request,profile_id):
+
+    
+    pass
+
+def delete_userinvite(request,queue_id):
+
+    queue = Queue.objects.get(id=queue_id)
+
+    user = request.user
+    profile = user.profile
+    profile = Profile.objects.get(id=profile_id)
+
+    userinvite = UserInvite(queue=queue,profile=profile)
+    userinvite.save()
+
+    pass
