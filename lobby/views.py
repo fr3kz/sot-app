@@ -328,25 +328,46 @@ def show_options(request,queue_id):
 
     return render(request, "lobby/options.html",context)
 
+#add request to add to lobby- invitatons to check form certain user
 def add_userinvite(request,queue_id,profile_id):
 
     queue = Queue.objects.get(id=queue_id)
 
     profile = Profile.objects.get(id=profile_id)
+    user = profile.user
 
     #add usee invitation
-    userinvite = UserInvite(queue=queue,profile=profile)
+    userinvite = UserInvite()
+    userinvite.save()
+
+    userinvite.queue.add(queue)
+    userinvite.save()
+
+    userinvite.user.add(user)
     userinvite.save()
 
     #TODO add positive messages
-    return redirect('profile', profile.id)
+    return redirect('')
 
 def show_userinvite(request,profile_id):
 
-    
+    profile = Profile.objects.get(id=profile_id)
+    user = profile.user
+
+    #show user invitations 
+
+    usrinvi = UserInvite.objects.filter(user=user)
+
+    context = {
+        'userinvitations':usrinvi
+    }
+
+    return render(request, "lobby/userinvitations.html",context)
+
+def accept_userinvitation(request,ivitation_id):
     pass
 
-def delete_userinvite(request,queue_id):
+def delete_userinvitation(request,queue_id):
 
     queue = Queue.objects.get(id=queue_id)
 
@@ -357,4 +378,4 @@ def delete_userinvite(request,queue_id):
     userinvite = UserInvite(queue=queue,profile=profile)
     userinvite.save()
 
-    pass
+    return redirect('')
