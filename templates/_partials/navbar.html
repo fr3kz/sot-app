@@ -5,6 +5,7 @@
           <li><a href="{% url 'create'%}">Nowa poczekalnia</a></li>
           <li><a href="{% url 'user-dash' %}">Dashboard</a></li>
           <li><a href="{% url 'profile' %}">Profil</a></li>
+          <li><a href="{% url 'showuserinvites' user.profile.id %}">Zaproszenia</a></li>
           {% else %}
           <li><a href="{% url 'login'%}">Signup</a></li>
           <li><a href="{% url 'register'%}">Register</a></li>
@@ -17,6 +18,7 @@
           <li><a href="{% url 'create'%}">Nowa poczekalnia</a></li>
           <li><a href="{% url 'user-dash' %}">Dashboard</a></li>
           <li><a href="{% url 'profile' %}">Profil </a></li>
+          <li><a href="{% url 'showuserinvites' user.profile.id %}">Zaproszenia</a></li>
           {% else %}
           <li><a href="{% url 'login'%}">Signup</a></li>
           <li><a href="{% url 'register'%}">Register</a></li>
