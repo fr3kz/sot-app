@@ -39,8 +39,8 @@ class Invitation(models.Model):
         return "Invite"
 
 class UserInvite(models.Model):
-    queue = models.ManyToManyField(Queue)
-    user = models.ManyToManyField(User)
+    queue = models.ForeignKey(Queue, on_delete=models.DO_NOTHING, blank=True,null=True)
+    user = models.ForeignKey(Profile,on_delete=models.DO_NOTHING,blank=True,null=True)
 
     def __str__(self):
         return "UserInvite"            

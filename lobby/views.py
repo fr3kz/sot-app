@@ -334,16 +334,15 @@ def add_userinvite(request,queue_id,profile_id):
     queue = Queue.objects.get(id=queue_id)
 
     profile = Profile.objects.get(id=profile_id)
-    user = profile.user
 
     #add usee invitation
     userinvite = UserInvite()
     userinvite.save()
 
-    userinvite.queue.add(queue)
+    userinvite.queue = queue
     userinvite.save()
 
-    userinvite.user.add(user)
+    userinvite.user = profile
     userinvite.save()
 
     #TODO add positive messages
@@ -352,11 +351,10 @@ def add_userinvite(request,queue_id,profile_id):
 def show_userinvite(request,profile_id):
 
     profile = Profile.objects.get(id=profile_id)
-    user = profile.user
 
     #show user invitations 
 
-    usrinvi = UserInvite.objects.filter(user=user)
+    usrinvi = UserInvite.objects.filter(user=profile)
 
     context = {
         'userinvitations':usrinvi
@@ -365,17 +363,21 @@ def show_userinvite(request,profile_id):
     return render(request, "lobby/userinvitations.html",context)
 
 def accept_userinvitation(request,ivitation_id):
-    pass
 
-def delete_userinvitation(request,queue_id):
+    user_invitation = UserInvite.objects.get(id=ivitation_id)
 
-    queue = Queue.objects.get(id=queue_id)
+    queue = user_invitation.queue
+    profile  = user_invitation.user
 
-    user = request.user
-    profile = user.profile
-    profile = Profile.objects.get(id=profile_id)
+    queue.usrs.add(profile)
 
-    userinvite = UserInvite(queue=queue,profile=profile)
-    userinvite.save()
+    user_invitation.delete()
 
-    return redirect('')
+    return redirect('index')
+
+def delete_userinvitation(request,ivitation_id):
+
+    user_invitation = UserInvite.objects.get(id=ivitation_id)
+    user_invitation.delte()
+
+    return redirect('index')

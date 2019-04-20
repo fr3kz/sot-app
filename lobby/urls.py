@@ -22,4 +22,5 @@ urlpatterns = [
     path('delete-friend/<int:friend_id>',views.delete_friend,name="deletefriend"),
     path('options/<int:queue_id>',views.show_options,name="options"),
     path('add-user-invite/<int:queue_id>/<int:profile_id>/', views.add_userinvite,name="adduserinvite"),
+    path('accept-invi/<int:ivitation_id>/', views.accept_userinvitation,name="acceptuserinvite"),
 ]
