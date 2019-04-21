@@ -18,7 +18,32 @@
 
                                     {% for invite in invitation %}
 
-                                        {{ invite.id }}<!---  display table same as in profile  -->
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Nazwa </th>
+                                                <th>Ilość osób</th>
+                                                <th>Kategoria</th>
+                                                <th>Dodaj</th>
+                                                <th>Usun</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr>
+                                                <td>{{ invite.queue.title }}</td>
+                                                <td>{{ invite.queue.usrs.all.count }} / {{ invite.queue.members }}</td>
+                                                <td>{{ invite.queue.category.title }}</td>
+                                                <td> 
+                                                    <a class="btn-floating btn-small waves-effect waves-light red" href="/accept-invi/{{ invite.id }}"><i class="material-icons">add</i></a>
+                                                </td>
+                                                <td> 
+                                                    <a class="btn-floating btn-small waves-effect waves-light red" href="/delete-invi/{{ invite.id }}"><i class="material-icons">remove</i></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
 
                                     {% endfor %}
 
