@@ -25,4 +25,6 @@ urlpatterns = [
     path('show-userinvites/<int:profile_id>/',views.show_userinvites,name="showuserinvites"),
     path('accept-invi/<int:ivitation_id>/', views.accept_userinvitation,name="acceptuserinvite"),
     path('delete-invi/<int:ivitation_id>/', views.delete_userinvitation,name="deleteuserinvite"),
+    #api
+    path('api/cateogries/', views.categories_list, name="categories_list"),
 ]

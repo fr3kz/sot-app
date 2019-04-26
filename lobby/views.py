@@ -4,17 +4,18 @@ from .models import (Queue,Category,Query,Invitation,UserInvite)
 from accounts.models import (Profile,Friendship)
 from django.contrib import messages
 from django.contrib.auth.models import User
+
+from .serializers import (CategorySerializer)
+#from django.http import HttpResponse,JsonResponse
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
 # Create your views here.
 
 def index(request):
-    #FOR PRODUCTION ONLY
     n1queues  = Queue.objects.order_by('-id')[:1]
-    n2queues  = Queue.objects.order_by('-id')[:1]
-    n3queues  = Queue.objects.order_by('-id')[:1]
-    #n1_id = n1queues.id + 1
-    #n2queues  = Queue.objects.filter(id=n1_id)
-    #n2_id = n2queues.id + 1
-    #n3queues  = Queue.objects.filter(id=n2_id)
+    n2queues  = Queue.objects.order_by('-id')[1:2]
+    n3queues  = Queue.objects.order_by('-id')[2:3]
     flobby   = Queue.objects.filter(category__title="Fort")
     alobby   = Queue.objects.filter(category__title="Atena")
     profiles = Profile.objects.order_by('-reputation')
@@ -378,3 +379,11 @@ def delete_userinvitation(request,ivitation_id):
     user_invitation.delte()
 
     return redirect('index')
+
+####### api #####
+@api_view(['GET'])
+def categories_list(request):
+    cateogries = Category.objects.all()
+    serializer = CategorySerializer(cateogries, many=True)
+
+    return Response(serializer.data)
