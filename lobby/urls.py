@@ -1,5 +1,7 @@
 from django.urls import path 
 from . import views
+from django.views.decorators.csrf import csrf_exempt
+
 
 urlpatterns = [
     path('', views.index, name="index"),
@@ -26,5 +28,6 @@ urlpatterns = [
     path('accept-invi/<int:ivitation_id>/', views.accept_userinvitation,name="acceptuserinvite"),
     path('delete-invi/<int:ivitation_id>/', views.delete_userinvitation,name="deleteuserinvite"),
     #api
-    path('api/cateogries/', views.categories_list, name="categories_list"),
+    path('api/categories/', views.CategoriesList.as_view(), name="categories_list"),
+    path('api/queues/', views.QueuesList.as_view(), name="queues_list"),
 ]

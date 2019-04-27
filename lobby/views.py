@@ -5,11 +5,12 @@ from accounts.models import (Profile,Friendship)
 from django.contrib import messages
 from django.contrib.auth.models import User
 
-from .serializers import (CategorySerializer)
-#from django.http import HttpResponse,JsonResponse
-from rest_framework.decorators import api_view
+from .serializers import (CategorySerializer,QueueSerializer)
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
 # Create your views here.
 
 def index(request):
@@ -381,9 +382,29 @@ def delete_userinvitation(request,ivitation_id):
     return redirect('index')
 
 ####### api #####
-@api_view(['GET'])
-def categories_list(request):
-    cateogries = Category.objects.all()
-    serializer = CategorySerializer(cateogries, many=True)
+class CategoriesList(APIView):
+    def get(self,request,format=None):
+        category = Category.objects.all()
+        serializer = CategorySerializer(category, many=True)
+        return Response(serializer.data)
 
-    return Response(serializer.data)
+    def post(self,request,format=None):
+        serializer = CategorySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
+
+class QueuesList(APIView):
+    def get(self,request,format=None):
+        category = Queue.objects.all()
+        serializer = QueueSerializer(category, many=True)
+        return Response(serializer.data)
+
+    def post(self,request,format=None):
+
+        serializer = QueueSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -11,10 +11,6 @@ class CategorySerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return Category.objects.create(**validated_data)
 
-    def updated(self, instance, validated_data):
-        instance.title = validated_data.get('title', instance.title)
-        instance.save()
-        return instance    
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -34,4 +30,16 @@ class QueueSerializer(serializers.ModelSerializer):
     class Meta:
         model = Queue
         fields = ('id','title','members',"date","category","usrs","author","complete")
+
+
+    def create(self, validated_data):
+        return Queue.objects.create(**validated_data)
+
+    def updated(self, instance, validated_data):
+            
+        instance.title = validated_data.get('title', instance.title)
+        instance.members = validated_data.get('members', instance.members)
+        instance.date = validated_data.get('date', instance.date)
+        instance.save()
+        return instance    
     
