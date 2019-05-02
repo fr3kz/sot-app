@@ -12,7 +12,8 @@
 
         {% include '_partials/alerts.html' %}
 
-    <form class="box"  action="{% url 'login' %}" method="POST">
+   
+        <form class="box"  action="{% url 'login' %}" method="POST">
     {% csrf_token %}
         <h1>Login</h1>
         <input type="text" name="username"placeholder="username">

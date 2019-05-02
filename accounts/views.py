@@ -40,7 +40,7 @@ def register(request):
             user = User.objects.get(username=username)
             if user is not None:
                     usr = User(username=username,password=password)
-                    profile = Profile(name=name, thumbnail=thumbnail_name)
+                    profile = Profile(name=name, thumbnail=thumbnail_name,user=usr)
                     return redirect('index') 
             else:
                     messages.error(request,'Zajety username')

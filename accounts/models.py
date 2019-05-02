@@ -15,7 +15,7 @@ class Profile(models.Model):
         return self.name
 
 class Friendship(models.Model):
-    profile = models.OneToOneField(Profile,on_delete=models.DO_NOTHING)
+    profile = models.OneToOneField(Profile,on_delete=models.CASCADE)
     friends = models.ManyToManyField(User)
 
     def __str__(self):

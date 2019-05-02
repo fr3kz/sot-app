@@ -308,9 +308,7 @@ def delete_friend(request,friend_id):
     for friend in fs.friends.all():
 
         if friend.id == friend_id:
-            fs.friends.remove(friend)
-
-    pass        
+            fs.friends.remove(friend)        
 
     return redirect('profile')
 
@@ -347,7 +345,7 @@ def add_userinvite(request,queue_id,profile_id):
     userinvite.save()
 
     #TODO add positive messages
-    return redirect('')
+    return redirect('profile')
 
 def show_userinvites(request,profile_id):
 
@@ -383,28 +381,43 @@ def delete_userinvitation(request,ivitation_id):
 
 ####### api #####
 class CategoriesList(APIView):
+
     def get(self,request,format=None):
+
         category = Category.objects.all()
         serializer = CategorySerializer(category, many=True)
+
         return Response(serializer.data)
 
     def post(self,request,format=None):
+
         serializer = CategorySerializer(data=request.data)
+
         if serializer.is_valid():
-            serializer.save()
+
+            s = serializer.save()
+            print(s.id)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
 
 class QueuesList(APIView):
+
     def get(self,request,format=None):
+
         category = Queue.objects.all()
         serializer = QueueSerializer(category, many=True)
+
         return Response(serializer.data)
 
     def post(self,request,format=None):
 
         serializer = QueueSerializer(data=request.data)
+
         if serializer.is_valid():
-            serializer.save()
+
+            s = serializer.save()
+            print(s.id)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)    

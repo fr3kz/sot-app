@@ -24,22 +24,14 @@ class UsrsSerializer(serializers.ModelSerializer):
         fields = ('id','thumbnail','gold','solus','alliance','reputation','user')
 
 class QueueSerializer(serializers.ModelSerializer):
-    category = CategorySerializer(many=False)
-    usrs     = UsrsSerializer(many=True)
-    author   = UserSerializer(many=False)
+    category = serializers.PrimaryKeyRelatedField(many=False,queryset=Queue.category)
+    usrs     = serializers.PrimaryKeyRelatedField(many=True,queryset=Queue.usrs)
+    author   = serializers.PrimaryKeyRelatedField(many=False,queryset=Queue.author)
     class Meta:
         model = Queue
         fields = ('id','title','members',"date","category","usrs","author","complete")
 
+    def save(self):
+        title = self.validated_data['title']
+        print(title)    
 
-    def create(self, validated_data):
-        return Queue.objects.create(**validated_data)
-
-    def updated(self, instance, validated_data):
-            
-        instance.title = validated_data.get('title', instance.title)
-        instance.members = validated_data.get('members', instance.members)
-        instance.date = validated_data.get('date', instance.date)
-        instance.save()
-        return instance    
-    

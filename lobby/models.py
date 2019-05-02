@@ -13,7 +13,7 @@ class Queue(models.Model):
     title = models.CharField(max_length=50)
     members = models.IntegerField()
     date = models.DateTimeField()
-    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING,blank=True,null=True, related_name='cat')
+    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING,blank=True,null=True)
     usrs = models.ManyToManyField(Profile)
     author = models.ForeignKey(User,on_delete=models.DO_NOTHING,blank=True,null=True)
     complete = models.BooleanField(default=False)
@@ -25,25 +25,25 @@ class Queue(models.Model):
         return self.date.strftime('%Y-%m-%d %H:%M')
 
     class Meta:
-        ordering = ['-id']    
+        ordering = ['-id']      
 
 class Query(models.Model):
-    queue = models.OneToOneField(Queue, on_delete=models.DO_NOTHING)
-    profile = models.OneToOneField(Profile,on_delete=models.DO_NOTHING)
+    queue = models.OneToOneField(Queue, on_delete=models.CASCADE)
+    profile = models.OneToOneField(Profile,on_delete=models.CASCADE)
 
     def __str__(self):
         return "Query"
 
 class Invitation(models.Model):
     invitator = models.ManyToManyField(User)
-    invited   = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)
+    invited   = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
     def __str__(self):
         return "Invite"
 
 class UserInvite(models.Model):
-    queue = models.ForeignKey(Queue, on_delete=models.DO_NOTHING, blank=True,null=True)
-    user = models.ForeignKey(Profile,on_delete=models.DO_NOTHING,blank=True,null=True)
+    queue = models.ForeignKey(Queue, on_delete=models.CASCADE, blank=True,null=True)
+    user = models.ForeignKey(Profile,on_delete=models.CASCADE,blank=True,null=True)
 
     def __str__(self):
         return "UserInvite"            
