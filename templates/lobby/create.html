@@ -55,9 +55,13 @@
                           <label class="sr-only">Kategoria</label><br><br>
                           <select name="category" class = "browser-default" required>
                             <option value="" disabled="disabled" selected="selected">Wybierz opcję</option>
-                            <option value="1">Fort</option>
-                            <option value="2">Atena</option>
-                            <option value="3">Gold</option>
+
+                            <!--- display for cstegbories-->
+                            {%  for category in categories%}
+                             <option value="{{ category.id }}">{{ category.title }}</option>
+                            {% endfor %}
+                            <!-- endfor-->
+                            
                         </select>                      
                         
                         </div>

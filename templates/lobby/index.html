@@ -28,6 +28,15 @@
               </div>
           </div>
 
+
+          <div class="fixed-action-btn">
+            <a class="btn-floating btn-large waves-effect waves-light red click-to-toggle ic" id="ic"  ><i class="material-icons">notifications</i></a> 
+            {% for notification in notifications %}
+                {{ notification.message }}
+            {% endfor %}
+          </div>
+
+
            <div class="row" style="padding: 0 20px 0 20px;">
 
               <div class="col s12 m6" >

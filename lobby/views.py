@@ -1,10 +1,10 @@
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import (Queue,Category,Query,Invitation,UserInvite)
+from .models import (Queue,Category,Query,Invitation,UserInvite,Notification)
 from accounts.models import (Profile,Friendship)
 from django.contrib import messages
 from django.contrib.auth.models import User
-
+from . import messages
 from .serializers import (CategorySerializer,QueueSerializer)
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -14,12 +14,16 @@ from rest_framework.parsers import JSONParser
 # Create your views here.
 
 def index(request):
-    n1queues  = Queue.objects.order_by('-id')[:1]
-    n2queues  = Queue.objects.order_by('-id')[1:2]
-    n3queues  = Queue.objects.order_by('-id')[2:3]
+    n1queues  = Queue.objects.all()[:1]
+    n2queues  = Queue.objects.all()[1:2]
+    n3queues  = Queue.objects.all()[2:3]
+
     flobby   = Queue.objects.filter(category__title="Fort")
     alobby   = Queue.objects.filter(category__title="Atena")
+
     profiles = Profile.objects.order_by('-reputation')
+    
+    notification = Notification.objects.filter(user=request.user)
 
     context  = {
         'n1fort':n1queues,
@@ -27,11 +31,14 @@ def index(request):
         'n3fort':n3queues,
         'flobby':flobby,
         'alobby':alobby,
-        'profiles':profiles
+        'profiles':profiles,
+        'notifications':notification
     }
+
     return render(request, 'lobby/index.html',context)
 
 def create(request):
+
     if request.method == 'POST':
         title    = request.POST['title']
         members  = request.POST['members']
@@ -39,19 +46,27 @@ def create(request):
         category = request.POST['category']
         
         user = request.user
+        profile = user.profile
 
         if user is None:
             messages.error(request,"nie jestes zalogowany")
+
             return redirect('create', queue.id)
 
-        profile = user.profile
         categ = Category.objects.get(id=category) 
+
         queue = Queue(title=title,members=members,date=date,category=categ,author=user)
         queue.save()
+
         queue.usrs.add(profile)
+
         return redirect('dashboard', queue.id)  
+
     else:
-        return render(request, 'lobby/create.html')    
+        
+        categories = Category.objects.all()
+
+        return render(request, 'lobby/create.html',{'categories':categories})    
 
 def detail(request, queue_id):
     queue = Queue.objects.get(id=queue_id)
@@ -63,11 +78,15 @@ def detail(request, queue_id):
     return render(request,'lobby/detail.html', context) 
 
 def dashboard(request, queue_id):
+
     user = request.user
     user_id = user.id
+
     queue = Queue.objects.get(id=queue_id)
     author_id = queue.author.id
+
     if user_id == author_id:
+
         queue = Queue.objects.get(id=queue_id)
         queries = Query.objects.filter(queue=queue)
 
@@ -88,66 +107,84 @@ def update_dash(request,queue_id):
     cateogry = request.POST['category']
 
     queue = Queue.objects.get(id=queue_id)
+
     if members:
         queue.members = members
+
     if title:
         queue.title = title
+
     if date:
         queue.date = date
+
     if cateogry:
         cat = Category.objects.get(id=cateogry)
         queue.category = cat
+
     queue.save()
     return redirect('dashboard', queue_id)         
 
 def delete_dash(request,queue_id):
+
     user = request.user
+
     queue = Queue.objects.get(id=queue_id)
     author_id = queue.author.id
+
     if user.id == author_id:
         queue.delete()
+
         return redirect('index')
+
     else:
         messages.error(request,"nie masz dostępu")
+
         return redirect('index')   
 
 def users_dashboard(request):
     user = request.user
+
     participate_queue = Queue.objects.filter(usrs=user.profile)
     authors_queue     = Queue.objects.filter(author=user) 
 
     context = {
         'pqueue':participate_queue,
         'aqueue': authors_queue
-
     }
 
     return render(request,'lobby/userdash.html', context)  
 
 def add_user(request,queue_id,profile_id):
-        queue = Queue.objects.get(id=queue_id)
         profile = Profile.objects.get(id=profile_id)
+        
+        queue = Queue.objects.get(id=queue_id)
         queue.usrs.add(profile)
+
         query = Query.objects.get(queue=queue,profile=profile).delete()
+
         return redirect('dashboard', queue_id)
 
 def add_query(request,queue_id):
     
     user = request.user
     profile = user.profile
+
     queue = Queue.objects.get(id=queue_id)
     
     #check if user already attend or quered
     if Query.objects.filter(queue=queue,profile=profile).exists():
         messages.error(request,'jestes juz tutaj quered')
+
         return redirect('detail', queue.id)
     elif Queue.objects.filter(usrs=profile,id=queue_id).exists():
         messages.error(request,'jestes juz tutaj ')
+
         return redirect('detail', queue.id) 
     else:
         #add query
         q = Query(profile=profile,queue=queue)
         q.save()
+
         return redirect('detail', queue.id)
 
 def profile(request):
@@ -167,6 +204,7 @@ def profile(request):
         #thumbnail
         if request.FILES:
             thumbnail  = request.FILES['image']
+
             fs = FileSystemStorage('media/accounts')
             fs.save(thumbnail.name,thumbnail) 
             
@@ -175,7 +213,6 @@ def profile(request):
             profile.thumbnail = thumbnail_path
 
         profile.save()
-       
 
         return redirect('profile')
 
@@ -187,9 +224,23 @@ def profile(request):
 
     return render(request,"lobby/profile.html",context)
 
+def profile_detail(request,profile_id):
+    
+    profile = Profile.objects.get(id=profile_id)
+    usr     = request.user
+
+    context = {
+        'profile': profile,
+        'user': profile.user,
+        'prof': usr.profile
+    }
+
+    return render(request,'lobby/profiledetail.html',context)
+
 def rate(request,queue_id):
     user    = request.user
     profile = user.profile
+
     queue   = Queue.objects.get(id=queue_id)
 
     queue_users = queue.usrs.all
@@ -203,45 +254,49 @@ def rate(request,queue_id):
     return render(request,"lobby/rate.html",context)
 
 def rep_plus(request,user_id,queue_id):
+
     #user to +1 a rep ajax funtion
     queue = Queue.objects.get(id=queue_id)
     user = User.objects.get(id=user_id)
+
     profile = user.profile
     profile.reputation = profile.reputation + 1
+
     profile.save()
     queue.usrs.remove(profile)
+
+    #CREATE notification that user achieve +1 rep
+    ausr = queue.author
+    mes = messages.rep_plus(ausr)
+    n = Notification(user=user,message=mes)
+    n.save()
+
     return redirect('rate',queue_id)
 
 def rep_downvote(request,user_id,queue_id):
     #user to -1 a rep
-    queue = Queue.objects.get(id=queue_id)
     user = User.objects.get(id=user_id)
+
     profile = user.profile
     profile.reputation = profile.reputation - 1
     profile.save()
+
+    queue = Queue.objects.get(id=queue_id)
     queue.usrs.remove(profile)
+    ausr = queue.author
+
+    mes = messages.rep_down(ausr)
+    n = Notification(user=user,message=mes)
+    n.save()
 
     return redirect('rate',queue_id)
 
-def profile_detail(request,profile_id):
-    
-    profile = Profile.objects.get(id=profile_id)
-    usr     = request.user
-
-
-    context = {
-        'profile': profile,
-        'user': profile.user,
-        'prof': usr.profile
-    }
-
-    return render(request,'lobby/profiledetail.html',context)
-
 def send_invite(request,invitator_id,invited_id):
+    #send  invitationm to friend
 
-    invitator = User.objects.get(id=invitator_id)
-    invitator_usr = invitator.profile
-    inv_id          = invitator_usr.id
+    invitator        = User.objects.get(id=invitator_id)
+    invitator_usr    = invitator.profile
+    inv_id           = invitator_usr.id
 
     invited   = Profile.objects.get(id=invited_id)
 
@@ -249,6 +304,7 @@ def send_invite(request,invitator_id,invited_id):
     if invitator_usr.id == invited.id:
         
         messages.error(request,"Nie mozesz zaprosić samego siebie.")
+
         return redirect('profile',invited_id)
 
     #TODO:check if user already send ivite    
@@ -258,15 +314,23 @@ def send_invite(request,invitator_id,invited_id):
     invitation.invitator.add(invitator)
     invitation.save()
 
+    #send notification to invited  profile
+    message = messages.send_invite_to_friends(invited)
+
+    notification = Notification(user=invited.user,message=message)
+    notification.save()
+
     return redirect('profile')
 
 def accept_invite(request,invitator_id,invited_id):
+    #accept request to add to friendship
 
-    invitator     = User.objects.get(id=invitator_id)
+    invitator         = User.objects.get(id=invitator_id)
+    invitator_profile = invitator.profile
 
-    invited       = Profile.objects.get(id=invited_id)
+    invited           = Profile.objects.get(id=invited_id)
 
-    invite        = Invitation.objects.get(invitator=invitator,invited=invited)   
+    invite            = Invitation.objects.get(invitator=invitator,invited=invited)   
 
     #ccheck if user has any firendship
     if Friendship.objects.filter(profile=invited).exists():
@@ -282,19 +346,31 @@ def accept_invite(request,invitator_id,invited_id):
         f.friends.add(invitator)
         f.save()
 
-
     invite.delete()
+
+    #add notification for user who sent inivte
+    message = messages.accept_invite_to_friends(invitator_usr)
+
+    notification = Notification(user=invitator,message=message)
+    notification.save()
 
     return redirect('profile')
 
 def reject_invite(request,invitator_id,invited_id):
    
     invitator     = User.objects.get(id=invitator_id)
+    invitator_profile = invitator.profile
 
     invited       = Profile.objects.get(id=invited_id)
 
     invite        = Invitation.objects.get(invitator=invitator,invited=invited)   
     invite.delete()
+
+    #add notification for user who sent inivte
+    message = messages.reject_invite_to_friends(invitator_usr)
+
+    notification = Notification(user=invitator,message=message)
+    notification.save()
 
     return redirect('profile')
 
@@ -396,28 +472,8 @@ class CategoriesList(APIView):
         if serializer.is_valid():
 
             s = serializer.save()
-            print(s.id)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
 
-class QueuesList(APIView):
-
-    def get(self,request,format=None):
-
-        category = Queue.objects.all()
-        serializer = QueueSerializer(category, many=True)
-
-        return Response(serializer.data)
-
-    def post(self,request,format=None):
-
-        serializer = QueueSerializer(data=request.data)
-
-        if serializer.is_valid():
-
-            s = serializer.save()
-            print(s.id)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
+#TODO: in index on fab click display small window for notification
