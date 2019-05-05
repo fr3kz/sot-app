@@ -12,7 +12,7 @@ from rest_framework import status
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 # Create your views here.
-
+#TODO: in index on fab click display small window for notification
 def index(request):
     n1queues  = Queue.objects.all()[:1]
     n2queues  = Queue.objects.all()[1:2]
@@ -476,4 +476,23 @@ class CategoriesList(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
 
-#TODO: in index on fab click display small window for notification
+class QueuesList(APIView):
+
+    def get(self,request,format=None):
+
+        category = Queue.objects.all()
+        serializer = QueueSerializer(category, many=True)
+
+        return Response(serializer.data)
+
+
+    def post(self,request):
+
+        serializer = QueueSerializer(data=request.data)
+
+        if serializer.is_valid():
+
+            s = serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 

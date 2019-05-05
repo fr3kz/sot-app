@@ -29,4 +29,6 @@ urlpatterns = [
     path('delete-invi/<int:ivitation_id>/', views.delete_userinvitation,name="deleteuserinvite"),
     #api
     path('api/categories/', views.CategoriesList.as_view(), name="categories_list"),
+    path('api/queues/', views.QueuesList.as_view(), name="queues_list"),
 ]
+  
