@@ -26,11 +26,18 @@
                   </div>
                 </div>
               </div>
+              </div>
           </div>
 
-
           <div class="fixed-action-btn">
-            <a class="btn-floating btn-large waves-effect waves-light red click-to-toggle ic" id="ic"  ><i class="material-icons">notifications</i></a> 
+            <a class="btn-floating btn-large waves-effect waves-light red click-to-toggle ic" id="ic"   onclick="pop()"><i class="material-icons">notifications</i></a> 
+
+            
+            <div class="boxx" id="box">
+            <h1>blum</h1>
+            <a class="close" onclick="pop()"></a>
+            </div>
+
             <!----
             {for notification in notifications }
                 { notification.message }
@@ -225,6 +232,25 @@
           </div>
     </div>
   </div>
+
+  <script type="text/javascript">
+
+    var c = 0;
+    function pop(){
+      if(c == 0){
+        document.getElementById('box').style.display = 'block';
+        document.getElementById('ic').style.display = 'none';
+        console.log(1)
+        c = 1;
+      }
+      else{
+        document.getElementById('box').style.display = 'none';
+        document.getElementById('ic').style.display = 'block';
+        console.log(1)
+        c = 0;
+      }
+    }
+    </script>
 
   <!---endsection 3-->
 {% endblock %}

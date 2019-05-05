@@ -245,13 +245,15 @@ body{
 */
 
 .boxx{
-  width:200px;
-  height:350px;
+  width:500px;
   overflow: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: (-50%,-50%);
   z-index: 9999;
   text-align: center;
   display: none;
-  background-color: #2ecc71;
 }
 
 @media only screen and (max-width: 800px) {
