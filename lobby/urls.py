@@ -27,6 +27,7 @@ urlpatterns = [
     path('show-userinvites/<int:profile_id>/',views.show_userinvites,name="showuserinvites"),
     path('accept-invi/<int:ivitation_id>/', views.accept_userinvitation,name="acceptuserinvite"),
     path('delete-invi/<int:ivitation_id>/', views.delete_userinvitation,name="deleteuserinvite"),
+    path('delete-notification/<int:notification_id>/', views.delete_notification, name="deletenotification"),
     #api
     path('api/categories/', views.CategoriesList.as_view(), name="categories_list"),
     path('api/queues/', views.QueuesList.as_view(), name="queues_list"),

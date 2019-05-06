@@ -11,19 +11,21 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
-# Create your views here.
-#TODO: in index on fab click display small window for notification
+
 def index(request):
     n1queues  = Queue.objects.all()[:1]
     n2queues  = Queue.objects.all()[1:2]
     n3queues  = Queue.objects.all()[2:3]
 
-    flobby   = Queue.objects.filter(category__title="Fort")
-    alobby   = Queue.objects.filter(category__title="Atena")
+    flobby   = Queue.objects.filter(category__title="Fort")[:3]
+    alobby   = Queue.objects.filter(category__title="Atena")[:3]
 
     profiles = Profile.objects.order_by('-reputation')
     
-    notification = Notification.objects.filter(user=request.user)
+    if request.user:
+        notification = Notification.objects.filter(user=request.user)
+    else:
+        notification = "1"    
 
     context  = {
         'n1fort':n1queues,
@@ -452,6 +454,12 @@ def delete_userinvitation(request,ivitation_id):
 
     user_invitation = UserInvite.objects.get(id=ivitation_id)
     user_invitation.delte()
+
+    return redirect('index')
+
+def delete_notification(request,notification_id):
+    notification = Notification.objects.get(id=notification_id)
+    notification.delete()
 
     return redirect('index')
 

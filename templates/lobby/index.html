@@ -32,12 +32,22 @@
           <div class="fixed-action-btn">
             <a class="btn-floating btn-large waves-effect waves-light red click-to-toggle ic" id="ic"   onclick="pop()"><i class="material-icons">notifications</i></a> 
 
-            
-            <div class="boxx" id="box">
-            <h1>blum</h1>
-            <a class="close" onclick="pop()"></a>
-            </div>
+            <!-- <a class="close right-align" onclick="pop()">X</a>-->
+            <div class="boxx z-depth-4" style="background-color: #cfd8dc  ;" id="box"> <br>
+            <h5>Powiadomienia</h5><br>
+            {% if notification != 1 %}
 
+                {% for notification in notifications %}
+
+                  <p><b>{{ notification.message }}</b> <a href="{% url 'deletenotification' notification.id %}">X</a> </p>
+
+                {% endfor %}
+
+            {% endif %}
+            <div class="fixed-action-btn">
+                <a class="btn-floating btn-large waves-effect waves-light red click-to-toggle ic" id="ic"  style="margin-right:5px; margin-bottom:5px;" onclick="pop()"><i class="material-icons">notifications</i></a> 
+              </div>
+            </div>
             <!----
             {for notification in notifications }
                 { notification.message }
