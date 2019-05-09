@@ -22,11 +22,12 @@ def index(request):
 
     profiles = Profile.objects.order_by('-reputation')
     
-    if request.user:
+    if request.user.is_authenticated:
+
         notification = Notification.objects.filter(user=request.user)
     else:
-        notification = "1"    
-
+        notification = ""
+    print(notification)
     context  = {
         'n1fort':n1queues,
         'n2fort':n2queues,
@@ -309,7 +310,11 @@ def send_invite(request,invitator_id,invited_id):
 
         return redirect('profile',invited_id)
 
-    #TODO:check if user already send ivite    
+    if Invitation(invited=invited).exists():
+
+        messages.error(request, "Juz zaprosiłes tego gracza")
+
+        return redirect('profile',invited_id)    
 
     invitation = Invitation(invited=invited)
     invitation.save()
@@ -504,3 +509,6 @@ class QueuesList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+
+#auth
+ 

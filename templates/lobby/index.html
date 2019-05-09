@@ -34,15 +34,20 @@
 
             <!-- <a class="close right-align" onclick="pop()">X</a>-->
             <div class="boxx z-depth-4" style="background-color: #cfd8dc  ;" id="box"> <br>
-            <h5>Powiadomienia</h5><br>
-            {% if notification != 1 %}
+            <h5><b>Powiadomienia</b></h5><br>
+            {% if notifications %}
 
-                {% for notification in notifications %}
+                  {% for notification in notifications %}
 
-                  <p><b>{{ notification.message }}</b> <a href="{% url 'deletenotification' notification.id %}">X</a> </p>
+                  <p><b>{{ notification.message }}</b> <a href="{% url 'deletenotification' notification.id %}">X</a> </p><hr>
 
-                {% endfor %}
+                  {% endfor %}
+              
 
+            {% else %}
+
+              <b>Nie masz zadnych powiadomien</b>
+    
             {% endif %}
             <div class="fixed-action-btn">
                 <a class="btn-floating btn-large waves-effect waves-light red click-to-toggle ic" id="ic"  style="margin-right:5px; margin-bottom:5px;" onclick="pop()"><i class="material-icons">notifications</i></a> 

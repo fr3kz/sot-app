@@ -6,9 +6,10 @@
           <li><a href="{% url 'user-dash' %}">Dashboard</a></li>
           <li><a href="{% url 'profile' %}">Profil</a></li>
           <li><a href="{% url 'showuserinvites' user.profile.id %}">Zaproszenia</a></li>
+          <li><a href="{% url 'logout' %}">Wyloguj się</li>
           {% else %}
-          <li><a href="{% url 'login'%}">Signup</a></li>
-          <li><a href="{% url 'register'%}">Register</a></li>
+          <li><a href="{% url 'login'%}">Zaloguj się</a></li>
+          <li><a href="{% url 'register'%}">Zarejestruj się</a></li>
           {% endif %}
   
       </ul>
@@ -19,9 +20,10 @@
           <li><a href="{% url 'user-dash' %}">Dashboard</a></li>
           <li><a href="{% url 'profile' %}">Profil </a></li>
           <li><a href="{% url 'showuserinvites' user.profile.id %}">Zaproszenia</a></li>
+          <li><a href="{% url 'logout' %}">Wyloguj się</li>
           {% else %}
-          <li><a href="{% url 'login'%}">Signup</a></li>
-          <li><a href="{% url 'register'%}">Register</a></li>
+          <li><a href="{% url 'login'%}">Zaloguj się</a></li>
+          <li><a href="{% url 'register'%}">Zarejestruj się</a></li>
           {% endif %}
       </ul>
       <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>

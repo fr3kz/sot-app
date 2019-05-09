@@ -251,7 +251,7 @@ body{
   z-index: 9999;
   text-align: center;
   display: none;
-  border: #000000 solid 4px;
+  border: #424242 solid 4px;
 }
 
 @media only screen and (max-width: 800px) {

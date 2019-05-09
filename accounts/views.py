@@ -46,4 +46,9 @@ def register(request):
                     messages.error(request,'Zajety username')
                     return redirect('login')     
         
-    return render(request,'accounts/register.html')    
+    return render(request,'accounts/register.html')
+
+def logout(request):
+
+        auth.logout(request)
+        return redirect('index')
