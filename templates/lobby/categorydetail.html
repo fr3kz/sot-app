@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container">
+
+            <div class="card-panel grey lighten-1 center-align" style=" paddingBottom: 150px;box-shadow:0px 0px 0px 0px rgba(0,0,0,0); ">
+                    <div class="container">
+                      <h1>{{ category.title }}</h1>
+                    </div>
+                   </div>
+
+    <div class="section2">
+            <div class="row center-align" style="padding: 0 20px 0 20px; align-">
+                    <h3><span style="border-bottom: 5px solid darkgreen;" class="mobile-title">Wolne poczeklanie:<span></span></h3>
+                    {% for queue in queues.all %}
+                    <div class="col s12 m4">
+                      <div class="card blue-grey darken-1 z-depth-4">
+                        <div class="card-content white-text">
+                          <span class="card-title">
+                                                  
+                                    {{ queue.title}}
+                          </span>
+                          <p>Ilosc osob {{ queue.usrs.all.count }}/{{ queue.members}},  Kiedy odplywamy? {{ queue.pretty_date}} , Co robimy? {{ queue.category.title}}, 
+                              Gracze: {% for profile in fort.usrs.all %}
+                              {{ profile.name}}
+                              {% endfor %}
+                            , </p>
+                        </div>
+                        <div class="card-action">
+                          <a href="{% url 'detail' queue.id %}">Dołącz</a>
+                        </div>
+                      </div>
+                    </div>
+                    {% endfor %}
+                    </div>
+    
+
+    </div><br><br>
+</div>
+{% endblock %}

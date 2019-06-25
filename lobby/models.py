@@ -13,7 +13,7 @@ class Queue(models.Model):
     title = models.CharField(max_length=50)
     members = models.IntegerField()
     date = models.DateTimeField()
-    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING,blank=True,null=True)
+    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING,blank=True,null=True, related_name="queue")
     usrs = models.ManyToManyField(Profile)
     author = models.ForeignKey(User,on_delete=models.DO_NOTHING,blank=True,null=True)
     complete = models.BooleanField(default=False)

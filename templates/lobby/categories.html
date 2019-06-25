@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<br>
+    <div class="container center-align">
+          
+            <div class="row">
+                {% for category in categories %}
+                    <div class="col s6 m4">
+                      <div class="card-panel teal">
+                        <span class="white-text">
+                            <a  class="btn" href="{% url 'categorydetail' category.id %}">
+                                    {{ category.title }} 
+                            </a>
+                            <p><br>
+                                
+                               Ilość wolnych poczekalni: {{ category.queue.count}}
+                              
+                            </p>
+                        </span>
+                      </div>
+                    </div>
+                    {% endfor %}
+            </div>
+
+    </div>
+
+{% endblock%}

@@ -2,7 +2,8 @@
     <div class="nav-wrapper container"><a id="logo-container" href="{% url 'index' %}" class="brand-logo">Sot - lobby </a>
       <ul class="right hide-on-med-and-down">
           {% if user.is_authenticated %}
-          <li><a href="{% url 'create'%}">Nowa poczekalnia</a></li>
+          <li><a href="{% url 'create'%}">Nowa poczekalnia</a></li> 
+          <li><a href="{% url 'categories'%}">Kategorie</a></li>
           <li><a href="{% url 'user-dash' %}">Dashboard</a></li>
           <li><a href="{% url 'profile' %}">Profil</a></li>
           <li><a href="{% url 'showuserinvites' user.profile.id %}">Zaproszenia</a></li>
@@ -17,6 +18,7 @@
       <ul id="nav-mobile" class="sidenav">
           {% if user.is_authenticated %}
           <li><a href="{% url 'create'%}">Nowa poczekalnia</a></li>
+          <li><a href="{% url 'categories'%}">Kategorie</a></li>
           <li><a href="{% url 'user-dash' %}">Dashboard</a></li>
           <li><a href="{% url 'profile' %}">Profil </a></li>
           <li><a href="{% url 'showuserinvites' user.profile.id %}">Zaproszenia</a></li>

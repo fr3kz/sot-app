@@ -28,6 +28,8 @@ urlpatterns = [
     path('accept-invi/<int:ivitation_id>/', views.accept_userinvitation,name="acceptuserinvite"),
     path('delete-invi/<int:ivitation_id>/', views.delete_userinvitation,name="deleteuserinvite"),
     path('deletenotification/<int:notification_id>/', views.delete_notification, name="deletenotification"),
+    path('categories/', views.categories_list, name="categories"),
+    path('category_detail/<int:category_id>/', views.category_detail, name="categorydetail"),
     #api
     path('api/categories/', views.CategoriesList.as_view(), name="categories_list"),
     path('api/queues/', views.QueuesList.as_view(), name="queues_list"),

@@ -4,7 +4,7 @@ from .models import (Queue,Category,Query,Invitation,UserInvite,Notification)
 from accounts.models import (Profile,Friendship)
 from django.contrib import messages
 from django.contrib.auth.models import User
-from . import messages
+from . import messages as mes
 from .serializers import (CategorySerializer,QueueSerializer)
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -27,7 +27,7 @@ def index(request):
         notification = Notification.objects.filter(user=request.user)
     else:
         notification = ""
-    print(notification)
+        
     context  = {
         'n1fort':n1queues,
         'n2fort':n2queues,
@@ -270,7 +270,7 @@ def rep_plus(request,user_id,queue_id):
 
     #CREATE notification that user achieve +1 rep
     ausr = queue.author
-    mes = messages.rep_plus(ausr)
+    mes = mes.rep_plus(ausr)
     n = Notification(user=user,message=mes)
     n.save()
 
@@ -288,8 +288,8 @@ def rep_downvote(request,user_id,queue_id):
     queue.usrs.remove(profile)
     ausr = queue.author
 
-    mes = messages.rep_down(ausr)
-    n = Notification(user=user,message=mes)
+    mes1 = mes.rep_down(ausr)
+    n = Notification(user=user,message=mes1)
     n.save()
 
     return redirect('rate',queue_id)
@@ -308,7 +308,7 @@ def send_invite(request,invitator_id,invited_id):
         
         messages.error(request,"Nie mozesz zaprosić samego siebie.")
 
-        return redirect('profile',invited_id)
+        return redirect('profiledetail',invited_id)
 
     if Invitation(invited=invited).exists():
 
@@ -322,7 +322,7 @@ def send_invite(request,invitator_id,invited_id):
     invitation.save()
 
     #send notification to invited  profile
-    message = messages.send_invite_to_friends(invited)
+    message = mes.send_invite_to_friends(invited)
 
     notification = Notification(user=invited.user,message=message)
     notification.save()
@@ -356,7 +356,7 @@ def accept_invite(request,invitator_id,invited_id):
     invite.delete()
 
     #add notification for user who sent inivte
-    message = messages.accept_invite_to_friends(invitator_usr)
+    message = mes.accept_invite_to_friends(invitator_usr)
 
     notification = Notification(user=invitator,message=message)
     notification.save()
@@ -374,7 +374,7 @@ def reject_invite(request,invitator_id,invited_id):
     invite.delete()
 
     #add notification for user who sent inivte
-    message = messages.reject_invite_to_friends(invitator_usr)
+    message = mes.reject_invite_to_friends(invitator_usr)
 
     notification = Notification(user=invitator,message=message)
     notification.save()
@@ -467,6 +467,28 @@ def delete_notification(request,notification_id):
     notification.delete()
 
     return redirect('index')
+
+def categories_list(request):
+    categories = Category.objects.all()
+    
+    context = {
+        'categories': categories,
+        
+    }
+
+    return render(request, "lobby/categories.html", context)
+
+def category_detail(request,category_id):
+    category = Category.objects.get(id=category_id)
+
+    queues = category.queue.all()
+
+    context = {
+        'category': category,
+        'queues': queues
+    }
+
+    return render(request, "lobby/categorydetail.html", context)
 
 ####### api #####
 class CategoriesList(APIView):
