@@ -3,14 +3,17 @@ from django.shortcuts import render,redirect,get_object_or_404
 from .models import (Queue,Category,Query,Invitation,UserInvite,Notification)
 from accounts.models import (Profile,Friendship)
 from django.contrib import messages
+from django.contrib import auth
 from django.contrib.auth.models import User
 from . import messages as mes
 from .serializers import (CategorySerializer,QueueSerializer)
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
+from rest_framework_simplejwt.tokens import RefreshToken
 
 def index(request):
     n1queues  = Queue.objects.all()[:1]
@@ -532,4 +535,16 @@ class QueuesList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
 
 #auth
- 
+class Login(APIView):
+   # permission_classes = (IsAuthenticated,)
+    
+    def post(self,request,format=None):
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = auth.authenticate(request,username=username,password=password)
+
+        if user is not None:
+            token = RefreshToken.for_user(user)
+
+            return Response({str(token.access_token)})
