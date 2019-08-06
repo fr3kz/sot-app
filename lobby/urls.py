@@ -33,6 +33,7 @@ urlpatterns = [
     #api
     path('api/categories/', views.CategoriesList.as_view(), name="categories_list"),
     path('api/queues/', views.QueuesList.as_view(), name="queues_list"),
-    path('api/login/', views.Login.as_view())
+    path('api/login/', views.Login.as_view()),
+    path('api/register', views.Register.as_view())
 ]
   

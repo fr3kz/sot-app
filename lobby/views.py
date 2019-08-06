@@ -548,3 +548,34 @@ class Login(APIView):
             token = RefreshToken.for_user(user)
 
             return Response({str(token.access_token)})
+
+        else:
+            return Response({'message': 'zle dane'})
+
+class Register(APIView):
+
+    def post(self,request,format=None):
+        name = request.POST['name']
+        username = requet.POST['username']
+        password = request.POST['password']
+        thumbnail = request.FILES['thumbnail']
+
+        user = User.objects.get(username=username)
+        if user is not None:
+            fs = FileSystemStorage('accounts/')
+            fs.save(thumbnail.name,thumbnail)
+            thumbnail_name = 'accounts/' + thumbnail_name
+
+            usr = User(username=username,password=password).save()
+            
+            profile = Profile(name=name,user=usr,thumbnail=thumbnail_name).save()
+
+            RefreshToken.for_user(usr)
+
+            return Response({
+                'token': str(RefreshToken.access_token),
+                'message':'zarejestrowano'
+            })
+        
+        else:
+            return Response({'message':'nick zajety'})
