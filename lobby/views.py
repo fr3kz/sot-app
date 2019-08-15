@@ -495,13 +495,13 @@ def category_detail(request,category_id):
 
 ####### api #####
 class CategoriesList(APIView):
-
+    permission_classes = (IsAuthenticated,)
     def get(self,request,format=None):
 
         category = Category.objects.all()
         serializer = CategorySerializer(category, many=True)
 
-        return Response(serializer.data)
+        return Response({'data':serializer.data,'user':str(request.user.id)})
 
     def post(self,request,format=None):
 
@@ -533,49 +533,3 @@ class QueuesList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
-
-#auth
-class Login(APIView):
-   # permission_classes = (IsAuthenticated,)
-    
-    def post(self,request,format=None):
-        username = request.POST['username']
-        password = request.POST['password']
-
-        user = auth.authenticate(request,username=username,password=password)
-
-        if user is not None:
-            token = RefreshToken.for_user(user)
-
-            return Response({str(token.access_token)})
-
-        else:
-            return Response({'message': 'zle dane'})
-
-class Register(APIView):
-
-    def post(self,request,format=None):
-        name = request.POST['name']
-        username = requet.POST['username']
-        password = request.POST['password']
-        thumbnail = request.FILES['thumbnail']
-
-        user = User.objects.get(username=username)
-        if user is not None:
-            fs = FileSystemStorage('accounts/')
-            fs.save(thumbnail.name,thumbnail)
-            thumbnail_name = 'accounts/' + thumbnail_name
-
-            usr = User(username=username,password=password).save()
-            
-            profile = Profile(name=name,user=usr,thumbnail=thumbnail_name).save()
-
-            RefreshToken.for_user(usr)
-
-            return Response({
-                'token': str(RefreshToken.access_token),
-                'message':'zarejestrowano'
-            })
-        
-        else:
-            return Response({'message':'nick zajety'})
