@@ -2,7 +2,7 @@
 
 # Sea of Thieves App
 
-Sea of Thieves App to aplikacja webowa oparta na frameworku Django, która umożliwia graczom Sea of Thieves założenie konta, zaimportowanie swoich statystyk z gry oraz utworzenie lobby bądź znalezienie innych graczy do rozgrywki. Projekt nie jest juz rozwiajny z racji wieku i przeskoku technologicznego.
+Sea of Thieves App to aplikacja webowa oparta na frameworku Django, która umożliwia graczom Sea of Thieves założenie konta, zaimportowanie swoich statystyk z gry oraz utworzenie lobby bądź znalezienie innych graczy do rozgrywki. Projekt nie jest juz rozwiajny.
 
 ## Funkcje
 
